@@ -10,19 +10,18 @@ using BullshitTracker.Models;
 
 namespace BullshitTracker.Controllers
 {
-    [Authorize(Users = @"MarkDeganiLocalhost, MarkDegani, RebeccaDegani")]
-    public class VendorsController : Controller
+    public class MerchantsController : Controller
     {
         private BullshitTrackerEntities db = new BullshitTrackerEntities();
 
-        // GET: /Vendors/
+        // GET: /Merchants/
         public ActionResult Index()
         {
             var vendors = db.Vendors.Include(v => v.Category1);
             return View(vendors.ToList());
         }
 
-        // GET: /Vendors/Details/5
+        // GET: /Merchants/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,14 +36,14 @@ namespace BullshitTracker.Controllers
             return View(vendor);
         }
 
-        // GET: /Vendors/Create
+        // GET: /Merchants/Create
         public ActionResult Create()
         {
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
             return View();
         }
 
-        // POST: /Vendors/Create
+        // POST: /Merchants/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -62,7 +61,7 @@ namespace BullshitTracker.Controllers
             return View(vendor);
         }
 
-        // GET: /Vendors/Edit/5
+        // GET: /Merchants/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,7 +77,7 @@ namespace BullshitTracker.Controllers
             return View(vendor);
         }
 
-        // POST: /Vendors/Edit/5
+        // POST: /Merchants/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -95,7 +94,7 @@ namespace BullshitTracker.Controllers
             return View(vendor);
         }
 
-        // GET: /Vendors/Delete/5
+        // GET: /Merchants/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,7 +109,7 @@ namespace BullshitTracker.Controllers
             return View(vendor);
         }
 
-        // POST: /Vendors/Delete/5
+        // POST: /Merchants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

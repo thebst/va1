@@ -195,10 +195,10 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ExeptionTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MerchantsController.cs" />
     <Compile Include="Controllers\PurchasesByCategoryController.cs" />
     <Compile Include="Controllers\TaxRatesController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
-    <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -454,11 +454,6 @@
     <Content Include="Views\PurchasesByCategory\Details.cshtml" />
     <Content Include="Views\PurchasesByCategory\Edit.cshtml" />
     <Content Include="Views\PurchasesByCategory\Index.cshtml" />
-    <Content Include="Views\Vendors\Create.cshtml" />
-    <Content Include="Views\Vendors\Delete.cshtml" />
-    <Content Include="Views\Vendors\Details.cshtml" />
-    <Content Include="Views\Vendors\Edit.cshtml" />
-    <Content Include="Views\Vendors\Index.cshtml" />
     <Content Include="Views\ExeptionTransaction\Create.cshtml" />
     <Content Include="Views\ExeptionTransaction\Delete.cshtml" />
     <Content Include="Views\ExeptionTransaction\Details.cshtml" />
@@ -474,6 +469,11 @@
     <Content Include="Views\Accounts\Details.cshtml" />
     <Content Include="Views\Accounts\Edit.cshtml" />
     <Content Include="Views\Accounts\Index.cshtml" />
+    <Content Include="Views\Merchants\Create.cshtml" />
+    <Content Include="Views\Merchants\Delete.cshtml" />
+    <Content Include="Views\Merchants\Details.cshtml" />
+    <Content Include="Views\Merchants\Edit.cshtml" />
+    <Content Include="Views\Merchants\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
