@@ -1,0 +1,640 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BullshitTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accounts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Budgets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BudgetName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Budget" Type="int" />
+        </EntityType>
+        <EntityType Name="ExceptionTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="int" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="AmountPreTax" Type="money" />
+          <Property Name="HST" Type="bit" />
+          <Property Name="Category" Type="int" />
+          <Property Name="Shame" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MonthlyBudget">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Period" Type="int" />
+          <Property Name="Budget" Type="int" />
+          <Property Name="Amount" Type="money" />
+        </EntityType>
+        <EntityType Name="Periods">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Year" Type="int" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="TransactionDate" Type="date" />
+          <Property Name="Vendor" Type="int" />
+          <Property Name="Total" Type="money" />
+          <Property Name="Account" Type="int" />
+          <Property Name="Shame" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Category" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PurchasesByCategory">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Amount" Type="numeric" Precision="38" Scale="6" />
+        </EntityType>
+        <Association Name="FK_Categories_Budgets">
+          <End Role="Budgets" Type="Self.Budgets" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budgets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="Budget" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExceptionTransactions_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="ExceptionTransactions" Type="Self.ExceptionTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExceptionTransactions">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExceptionTransactions_Transactions">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1" />
+          <End Role="ExceptionTransactions" Type="Self.ExceptionTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExceptionTransactions">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonthlyBudget_Budgets">
+          <End Role="Budgets" Type="Self.Budgets" Multiplicity="0..1" />
+          <End Role="MonthlyBudget" Type="Self.MonthlyBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budgets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyBudget">
+              <PropertyRef Name="Budget" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonthlyBudget_Periods">
+          <End Role="Periods" Type="Self.Periods" Multiplicity="0..1" />
+          <End Role="MonthlyBudget" Type="Self.MonthlyBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Periods">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyBudget">
+              <PropertyRef Name="Period" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Vendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="Vendor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vendors_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendors">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BullshitTrackerModelStoreContainer">
+          <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExceptionTransactions" EntityType="Self.ExceptionTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonthlyBudget" EntityType="Self.MonthlyBudget" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Periods" EntityType="Self.Periods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchasesByCategory" EntityType="Self.PurchasesByCategory" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PurchasesByCategory].[TransactionId] AS [TransactionId], 
+    [PurchasesByCategory].[CategoryId] AS [CategoryId], 
+    [PurchasesByCategory].[Description] AS [Description], 
+    [PurchasesByCategory].[Amount] AS [Amount]
+    FROM [dbo].[PurchasesByCategory] AS [PurchasesByCategory]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Categories_Budgets" Association="Self.FK_Categories_Budgets">
+            <End Role="Budgets" EntitySet="Budgets" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExceptionTransactions_Categories" Association="Self.FK_ExceptionTransactions_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="ExceptionTransactions" EntitySet="ExceptionTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExceptionTransactions_Transactions" Association="Self.FK_ExceptionTransactions_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="ExceptionTransactions" EntitySet="ExceptionTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonthlyBudget_Budgets" Association="Self.FK_MonthlyBudget_Budgets">
+            <End Role="Budgets" EntitySet="Budgets" />
+            <End Role="MonthlyBudget" EntitySet="MonthlyBudget" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonthlyBudget_Periods" Association="Self.FK_MonthlyBudget_Periods">
+            <End Role="Periods" EntitySet="Periods" />
+            <End Role="MonthlyBudget" EntitySet="MonthlyBudget" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Accounts" Association="Self.FK_Transactions_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Vendors" Association="Self.FK_Transactions_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vendors_Categories" Association="Self.FK_Vendors_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Vendors" EntitySet="Vendors" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BullshitTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Accounts" FromRole="Accounts" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ExceptionTransactions" Relationship="Self.FK_ExceptionTransactions_Categories" FromRole="Categories" ToRole="ExceptionTransactions" />
+          <NavigationProperty Name="Vendors" Relationship="Self.FK_Vendors_Categories" FromRole="Categories" ToRole="Vendors" />
+          <NavigationProperty Name="PurchasesByCategories" Relationship="BullshitTrackerModel.CategoryPurchasesByCategory" FromRole="Category" ToRole="PurchasesByCategory" />
+          <Property Name="Budget" Type="Int32" />
+          <NavigationProperty Name="Budget1" Relationship="BullshitTrackerModel.FK_Categories_Budgets" FromRole="Category" ToRole="Budget" />
+        </EntityType>
+        <EntityType Name="ExceptionTransaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AmountPreTax" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="HST" Type="Boolean" />
+          <Property Name="Category" Type="Int32" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK_ExceptionTransactions_Categories" FromRole="ExceptionTransactions" ToRole="Categories" />
+          <NavigationProperty Name="Transaction" Relationship="Self.FK_ExceptionTransactions_Transactions" FromRole="ExceptionTransactions" ToRole="Transactions" />
+          <Property Name="Shame" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+          <Property Name="Vendor" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Account" Type="Int32" />
+          <NavigationProperty Name="Account1" Relationship="Self.FK_Transactions_Accounts" FromRole="Transactions" ToRole="Accounts" />
+          <NavigationProperty Name="ExceptionTransactions" Relationship="Self.FK_ExceptionTransactions_Transactions" FromRole="Transactions" ToRole="ExceptionTransactions" />
+          <NavigationProperty Name="Vendor1" Relationship="Self.FK_Transactions_Vendors" FromRole="Transactions" ToRole="Vendors" />
+          <NavigationProperty Name="PurchasesByCategories" Relationship="BullshitTrackerModel.TransactionPurchasesByCategory" FromRole="Transaction" ToRole="PurchasesByCategory" />
+          <Property Name="Shame" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="Int32" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK_Vendors_Categories" FromRole="Vendors" ToRole="Categories" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Vendors" FromRole="Vendors" ToRole="Transactions" />
+        </EntityType>
+        <Association Name="FK_Transactions_Accounts">
+          <End Role="Accounts" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExceptionTransactions_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="ExceptionTransactions" Type="Self.ExceptionTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExceptionTransactions">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vendors_Categories">
+          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Vendors" Type="Self.Vendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendors">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExceptionTransactions_Transactions">
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="ExceptionTransactions" Type="Self.ExceptionTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExceptionTransactions">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Vendors">
+          <End Role="Vendors" Type="Self.Vendor" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="Vendor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BullshitTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="ExceptionTransactions" EntityType="Self.ExceptionTransaction" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendor" />
+          <AssociationSet Name="FK_Transactions_Accounts" Association="Self.FK_Transactions_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExceptionTransactions_Categories" Association="Self.FK_ExceptionTransactions_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="ExceptionTransactions" EntitySet="ExceptionTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vendors_Categories" Association="Self.FK_Vendors_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Vendors" EntitySet="Vendors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExceptionTransactions_Transactions" Association="Self.FK_ExceptionTransactions_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="ExceptionTransactions" EntitySet="ExceptionTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Vendors" Association="Self.FK_Transactions_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <EntitySet Name="PurchasesByCategories" EntityType="BullshitTrackerModel.PurchasesByCategory" />
+          <AssociationSet Name="CategoryPurchasesByCategory" Association="BullshitTrackerModel.CategoryPurchasesByCategory">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="PurchasesByCategory" EntitySet="PurchasesByCategories" />
+          </AssociationSet>
+          <AssociationSet Name="TransactionPurchasesByCategory" Association="BullshitTrackerModel.TransactionPurchasesByCategory">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="PurchasesByCategory" EntitySet="PurchasesByCategories" />
+          </AssociationSet>
+          <EntitySet Name="Budgets" EntityType="BullshitTrackerModel.Budget" />
+          <EntitySet Name="MonthlyBudgets" EntityType="BullshitTrackerModel.MonthlyBudget" />
+          <EntitySet Name="Periods" EntityType="BullshitTrackerModel.Period" />
+          <AssociationSet Name="FK_Categories_Budgets" Association="BullshitTrackerModel.FK_Categories_Budgets">
+            <End Role="Budget" EntitySet="Budgets" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonthlyBudget_Budgets" Association="BullshitTrackerModel.FK_MonthlyBudget_Budgets">
+            <End Role="Budget" EntitySet="Budgets" />
+            <End Role="MonthlyBudget" EntitySet="MonthlyBudgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MonthlyBudget_Periods" Association="BullshitTrackerModel.FK_MonthlyBudget_Periods">
+            <End Role="Period" EntitySet="Periods" />
+            <End Role="MonthlyBudget" EntitySet="MonthlyBudgets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PurchasesByCategory">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="38" Scale="6" />
+          <NavigationProperty Name="Category" Relationship="BullshitTrackerModel.CategoryPurchasesByCategory" FromRole="PurchasesByCategory" ToRole="Category" />
+          <NavigationProperty Name="Transaction" Relationship="BullshitTrackerModel.TransactionPurchasesByCategory" FromRole="PurchasesByCategory" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="CategoryPurchasesByCategory">
+          <End Type="BullshitTrackerModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="BullshitTrackerModel.PurchasesByCategory" Role="PurchasesByCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchasesByCategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TransactionPurchasesByCategory">
+          <End Type="BullshitTrackerModel.Transaction" Role="Transaction" Multiplicity="1" />
+          <End Type="BullshitTrackerModel.PurchasesByCategory" Role="PurchasesByCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchasesByCategory">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Budget">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BudgetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Categories" Relationship="BullshitTrackerModel.FK_Categories_Budgets" FromRole="Budget" ToRole="Category" />
+          <NavigationProperty Name="MonthlyBudgets" Relationship="BullshitTrackerModel.FK_MonthlyBudget_Budgets" FromRole="Budget" ToRole="MonthlyBudget" />
+        </EntityType>
+        <EntityType Name="MonthlyBudget">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Period" Type="Int32" />
+          <Property Name="Budget" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Budget1" Relationship="BullshitTrackerModel.FK_MonthlyBudget_Budgets" FromRole="MonthlyBudget" ToRole="Budget" />
+          <NavigationProperty Name="Period1" Relationship="BullshitTrackerModel.FK_MonthlyBudget_Periods" FromRole="MonthlyBudget" ToRole="Period" />
+        </EntityType>
+        <EntityType Name="Period">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <NavigationProperty Name="MonthlyBudgets" Relationship="BullshitTrackerModel.FK_MonthlyBudget_Periods" FromRole="Period" ToRole="MonthlyBudget" />
+        </EntityType>
+        <Association Name="FK_Categories_Budgets">
+          <End Type="BullshitTrackerModel.Budget" Role="Budget" Multiplicity="0..1" />
+          <End Type="BullshitTrackerModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budget">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="Budget" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonthlyBudget_Budgets">
+          <End Type="BullshitTrackerModel.Budget" Role="Budget" Multiplicity="0..1" />
+          <End Type="BullshitTrackerModel.MonthlyBudget" Role="MonthlyBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budget">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyBudget">
+              <PropertyRef Name="Budget" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MonthlyBudget_Periods">
+          <End Type="BullshitTrackerModel.Period" Role="Period" Multiplicity="0..1" />
+          <End Type="BullshitTrackerModel.MonthlyBudget" Role="MonthlyBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyBudget">
+              <PropertyRef Name="Period" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BullshitTrackerModelStoreContainer" CdmEntityContainer="BullshitTrackerEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.Account">
+              <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExceptionTransactions">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.ExceptionTransaction">
+              <MappingFragment StoreEntitySet="ExceptionTransactions">
+                <ScalarProperty Name="Shame" ColumnName="Shame" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AmountPreTax" ColumnName="AmountPreTax" />
+                <ScalarProperty Name="HST" ColumnName="HST" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Shame" ColumnName="Shame" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.Vendor">
+              <MappingFragment StoreEntitySet="Vendors">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchasesByCategories">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.PurchasesByCategory">
+              <MappingFragment StoreEntitySet="PurchasesByCategory">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Budgets">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.Budget">
+              <MappingFragment StoreEntitySet="Budgets">
+                <ScalarProperty Name="BudgetName" ColumnName="BudgetName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlyBudgets">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.MonthlyBudget">
+              <MappingFragment StoreEntitySet="MonthlyBudget">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Periods">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.Period">
+              <MappingFragment StoreEntitySet="Periods">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b8c866e4235c4c58b973121be1e466a3" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="BullshitTrackerModel.Account" Width="1.5" PointX="0.625" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.Category" Width="1.5" PointX="11.125" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.ExceptionTransaction" Width="1.5" PointX="5.375" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.Transaction" Width="1.5" PointX="2.625" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.Vendor" Width="1.5" PointX="8.875" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_Transactions_Accounts" ManuallyRouted="false" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_ExceptionTransactions_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_Vendors_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_ExceptionTransactions_Transactions" ManuallyRouted="false" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_Transactions_Vendors" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.PurchasesByCategory" Width="1.5" PointX="6.75" PointY="7.875" />
+        <AssociationConnector Association="BullshitTrackerModel.CategoryPurchasesByCategory" />
+        <AssociationConnector Association="BullshitTrackerModel.TransactionPurchasesByCategory" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="BullshitTrackerModel.Budget" Width="1.5" PointX="8.5" PointY="0.875" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.MonthlyBudget" Width="1.5" PointX="6" PointY="1.75" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.Period" Width="1.5" PointX="3.125" PointY="1.125" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_Categories_Budgets" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_MonthlyBudget_Budgets" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_MonthlyBudget_Periods" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
