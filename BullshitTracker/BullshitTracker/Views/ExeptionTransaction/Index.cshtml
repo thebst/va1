@@ -21,10 +21,16 @@
             @Html.DisplayNameFor(model => model.HST)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Shame)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Category1.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Transaction.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaxRate1.Description)
         </th>
         <th></th>
     </tr>
@@ -41,10 +47,16 @@
             @Html.DisplayFor(modelItem => item.HST)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Shame)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Category1.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Transaction.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TaxRate1.Description)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

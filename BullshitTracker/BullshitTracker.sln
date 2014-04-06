@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BullshitTracker", "Bullshit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BullshitTracker.Tests", "BullshitTracker.Tests\BullshitTracker.Tests.csproj", "{77FD12E8-298D-42A1-8D2F-809574E74A64}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BullshitDB", "BullshitDB\BullshitDB\BullshitDB.sqlproj", "{A80568A9-5611-4329-990A-9D0120C7DCFD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,12 +22,6 @@ Global
 		{77FD12E8-298D-42A1-8D2F-809574E74A64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77FD12E8-298D-42A1-8D2F-809574E74A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77FD12E8-298D-42A1-8D2F-809574E74A64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A80568A9-5611-4329-990A-9D0120C7DCFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A80568A9-5611-4329-990A-9D0120C7DCFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A80568A9-5611-4329-990A-9D0120C7DCFD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A80568A9-5611-4329-990A-9D0120C7DCFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A80568A9-5611-4329-990A-9D0120C7DCFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A80568A9-5611-4329-990A-9D0120C7DCFD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

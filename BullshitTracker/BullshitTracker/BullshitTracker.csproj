@@ -192,9 +192,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ExeptionTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PurchasesByCategoryController.cs" />
+    <Compile Include="Controllers\TaxRatesController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -236,6 +238,9 @@
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PurchasesByCategory.cs">
+      <DependentUpon>BullshitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaxRate.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction.cs">
@@ -444,11 +449,6 @@
     <Content Include="Views\Transactions\Details.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
-    <Content Include="Views\ExeptionTransaction\Create.cshtml" />
-    <Content Include="Views\ExeptionTransaction\Delete.cshtml" />
-    <Content Include="Views\ExeptionTransaction\Details.cshtml" />
-    <Content Include="Views\ExeptionTransaction\Edit.cshtml" />
-    <Content Include="Views\ExeptionTransaction\Index.cshtml" />
     <Content Include="Views\PurchasesByCategory\Create.cshtml" />
     <Content Include="Views\PurchasesByCategory\Delete.cshtml" />
     <Content Include="Views\PurchasesByCategory\Details.cshtml" />
@@ -459,6 +459,21 @@
     <Content Include="Views\Vendors\Details.cshtml" />
     <Content Include="Views\Vendors\Edit.cshtml" />
     <Content Include="Views\Vendors\Index.cshtml" />
+    <Content Include="Views\ExeptionTransaction\Create.cshtml" />
+    <Content Include="Views\ExeptionTransaction\Delete.cshtml" />
+    <Content Include="Views\ExeptionTransaction\Details.cshtml" />
+    <Content Include="Views\ExeptionTransaction\Edit.cshtml" />
+    <Content Include="Views\ExeptionTransaction\Index.cshtml" />
+    <Content Include="Views\TaxRates\Create.cshtml" />
+    <Content Include="Views\TaxRates\Delete.cshtml" />
+    <Content Include="Views\TaxRates\Details.cshtml" />
+    <Content Include="Views\TaxRates\Edit.cshtml" />
+    <Content Include="Views\TaxRates\Index.cshtml" />
+    <Content Include="Views\Accounts\Create.cshtml" />
+    <Content Include="Views\Accounts\Delete.cshtml" />
+    <Content Include="Views\Accounts\Details.cshtml" />
+    <Content Include="Views\Accounts\Edit.cshtml" />
+    <Content Include="Views\Accounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

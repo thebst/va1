@@ -34,5 +34,6 @@ namespace BullshitTracker.Models
         public virtual DbSet<Budget> Budgets { get; set; }
         public virtual DbSet<MonthlyBudget> MonthlyBudgets { get; set; }
         public virtual DbSet<Period> Periods { get; set; }
+        public virtual DbSet<TaxRate> TaxRates { get; set; }
     }
 }

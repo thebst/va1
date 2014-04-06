@@ -10,7 +10,6 @@ using BullshitTracker.Models;
 
 namespace BullshitTracker.Controllers
 {
-    [Authorize(Users = @"MarkDeganiLocalhost, MarkDegani, RebeccaDegani")]
     public class ExeptionTransactionController : Controller
     {
         private BullshitTrackerEntities db = new BullshitTrackerEntities();
@@ -18,7 +17,7 @@ namespace BullshitTracker.Controllers
         // GET: /ExeptionTransaction/
         public ActionResult Index()
         {
-            var exceptiontransactions = db.ExceptionTransactions.Include(e => e.Category1).Include(e => e.Transaction);
+            var exceptiontransactions = db.ExceptionTransactions.Include(e => e.Category1).Include(e => e.Transaction).Include(e => e.TaxRate1);
             return View(exceptiontransactions.ToList());
         }
 
@@ -42,6 +41,7 @@ namespace BullshitTracker.Controllers
         {
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
             ViewBag.TransactionId = new SelectList(db.Transactions, "Id", "Description");
+            ViewBag.TaxRate = new SelectList(db.TaxRates, "Id", "Description");
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace BullshitTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,TransactionId,Description,AmountPreTax,HST,Category")] ExceptionTransaction exceptiontransaction)
+        public ActionResult Create([Bind(Include="Id,TransactionId,Description,AmountPreTax,HST,Category,Shame,TaxRate")] ExceptionTransaction exceptiontransaction)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +61,7 @@ namespace BullshitTracker.Controllers
 
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name", exceptiontransaction.Category);
             ViewBag.TransactionId = new SelectList(db.Transactions, "Id", "Description", exceptiontransaction.TransactionId);
+            ViewBag.TaxRate = new SelectList(db.TaxRates, "Id", "Description", exceptiontransaction.TaxRate);
             return View(exceptiontransaction);
         }
 
@@ -78,6 +79,7 @@ namespace BullshitTracker.Controllers
             }
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name", exceptiontransaction.Category);
             ViewBag.TransactionId = new SelectList(db.Transactions, "Id", "Description", exceptiontransaction.TransactionId);
+            ViewBag.TaxRate = new SelectList(db.TaxRates, "Id", "Description", exceptiontransaction.TaxRate);
             return View(exceptiontransaction);
         }
 
@@ -86,7 +88,7 @@ namespace BullshitTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,TransactionId,Description,AmountPreTax,HST,Category")] ExceptionTransaction exceptiontransaction)
+        public ActionResult Edit([Bind(Include="Id,TransactionId,Description,AmountPreTax,HST,Category,Shame,TaxRate")] ExceptionTransaction exceptiontransaction)
         {
             if (ModelState.IsValid)
             {
@@ -96,6 +98,7 @@ namespace BullshitTracker.Controllers
             }
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name", exceptiontransaction.Category);
             ViewBag.TransactionId = new SelectList(db.Transactions, "Id", "Description", exceptiontransaction.TransactionId);
+            ViewBag.TaxRate = new SelectList(db.TaxRates, "Id", "Description", exceptiontransaction.TaxRate);
             return View(exceptiontransaction);
         }
 

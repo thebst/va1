@@ -21,8 +21,10 @@ namespace BullshitTracker.Models
         public Nullable<bool> HST { get; set; }
         public Nullable<int> Category { get; set; }
         public bool Shame { get; set; }
+        public Nullable<int> TaxRate { get; set; }
     
         public virtual Category Category1 { get; set; }
         public virtual Transaction Transaction { get; set; }
+        public virtual TaxRate TaxRate1 { get; set; }
     }
 }

@@ -12,14 +12,17 @@ namespace BullshitTracker.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchasesByCategory
+    public partial class TaxRate
     {
-        public int TransactionId { get; set; }
-        public int CategoryId { get; set; }
-        public string Description { get; set; }
-        public Nullable<double> Amount { get; set; }
+        public TaxRate()
+        {
+            this.ExceptionTransactions = new HashSet<ExceptionTransaction>();
+        }
     
-        public virtual Category Category { get; set; }
-        public virtual Transaction Transaction { get; set; }
+        public int Id { get; set; }
+        public Nullable<double> Rate { get; set; }
+        public string Description { get; set; }
+    
+        public virtual ICollection<ExceptionTransaction> ExceptionTransactions { get; set; }
     }
 }

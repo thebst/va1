@@ -38,6 +38,7 @@
           <Property Name="HST" Type="bit" />
           <Property Name="Category" Type="int" />
           <Property Name="Shame" Type="bit" Nullable="false" />
+          <Property Name="TaxRate" Type="int" />
         </EntityType>
         <EntityType Name="MonthlyBudget">
           <Key>
@@ -58,6 +59,14 @@
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Month" Type="int" />
           <Property Name="Year" Type="int" />
+        </EntityType>
+        <EntityType Name="TaxRates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rate" Type="float" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -80,7 +89,7 @@
           <Property Name="Category" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PurchasesByCategory">
           <Key>
             <PropertyRef Name="TransactionId" />
@@ -89,7 +98,7 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
           <Property Name="TransactionId" Type="int" Nullable="false" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
-          <Property Name="Amount" Type="numeric" Precision="38" Scale="6" />
+          <Property Name="Amount" Type="float" />
         </EntityType>
         <Association Name="FK_Categories_Budgets">
           <End Role="Budgets" Type="Self.Budgets" Multiplicity="0..1" />
@@ -112,6 +121,18 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
             </Principal>
             <Dependent Role="ExceptionTransactions">
               <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExceptionTransactions_TaxRates">
+          <End Role="TaxRates" Type="Self.TaxRates" Multiplicity="0..1" />
+          <End Role="ExceptionTransactions" Type="Self.ExceptionTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxRates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExceptionTransactions">
+              <PropertyRef Name="TaxRate" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -194,6 +215,7 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
           <EntitySet Name="ExceptionTransactions" EntityType="Self.ExceptionTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyBudget" EntityType="Self.MonthlyBudget" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periods" EntityType="Self.Periods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxRates" EntityType="Self.TaxRates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchasesByCategory" EntityType="Self.PurchasesByCategory" store:Type="Views" store:Schema="dbo">
@@ -210,6 +232,10 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
           </AssociationSet>
           <AssociationSet Name="FK_ExceptionTransactions_Categories" Association="Self.FK_ExceptionTransactions_Categories">
             <End Role="Categories" EntitySet="Categories" />
+            <End Role="ExceptionTransactions" EntitySet="ExceptionTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExceptionTransactions_TaxRates" Association="Self.FK_ExceptionTransactions_TaxRates">
+            <End Role="TaxRates" EntitySet="TaxRates" />
             <End Role="ExceptionTransactions" EntitySet="ExceptionTransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_ExceptionTransactions_Transactions" Association="Self.FK_ExceptionTransactions_Transactions">
@@ -274,6 +300,8 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
           <NavigationProperty Name="Category1" Relationship="Self.FK_ExceptionTransactions_Categories" FromRole="ExceptionTransactions" ToRole="Categories" />
           <NavigationProperty Name="Transaction" Relationship="Self.FK_ExceptionTransactions_Transactions" FromRole="ExceptionTransactions" ToRole="Transactions" />
           <Property Name="Shame" Type="Boolean" Nullable="false" />
+          <Property Name="TaxRate" Type="Int32" />
+          <NavigationProperty Name="TaxRate1" Relationship="BullshitTrackerModel.FK_ExceptionTransactions_TaxRates" FromRole="ExceptionTransaction" ToRole="TaxRate" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -411,6 +439,11 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
             <End Role="Period" EntitySet="Periods" />
             <End Role="MonthlyBudget" EntitySet="MonthlyBudgets" />
           </AssociationSet>
+          <EntitySet Name="TaxRates" EntityType="BullshitTrackerModel.TaxRate" />
+          <AssociationSet Name="FK_ExceptionTransactions_TaxRates" Association="BullshitTrackerModel.FK_ExceptionTransactions_TaxRates">
+            <End Role="TaxRate" EntitySet="TaxRates" />
+            <End Role="ExceptionTransaction" EntitySet="ExceptionTransactions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PurchasesByCategory">
           <Key>
@@ -420,7 +453,7 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
           <Property Name="TransactionId" Type="Int32" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Amount" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="Amount" Type="Double" />
           <NavigationProperty Name="Category" Relationship="BullshitTrackerModel.CategoryPurchasesByCategory" FromRole="PurchasesByCategory" ToRole="Category" />
           <NavigationProperty Name="Transaction" Relationship="BullshitTrackerModel.TransactionPurchasesByCategory" FromRole="PurchasesByCategory" ToRole="Transaction" />
         </EntityType>
@@ -516,6 +549,27 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TaxRate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rate" Type="Double" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ExceptionTransactions" Relationship="BullshitTrackerModel.FK_ExceptionTransactions_TaxRates" FromRole="TaxRate" ToRole="ExceptionTransaction" />
+        </EntityType>
+        <Association Name="FK_ExceptionTransactions_TaxRates">
+          <End Type="BullshitTrackerModel.TaxRate" Role="TaxRate" Multiplicity="0..1" />
+          <End Type="BullshitTrackerModel.ExceptionTransaction" Role="ExceptionTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxRate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExceptionTransaction">
+              <PropertyRef Name="TaxRate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -542,6 +596,7 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
           <EntitySetMapping Name="ExceptionTransactions">
             <EntityTypeMapping TypeName="BullshitTrackerModel.ExceptionTransaction">
               <MappingFragment StoreEntitySet="ExceptionTransactions">
+                <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
                 <ScalarProperty Name="Shame" ColumnName="Shame" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
@@ -610,6 +665,15 @@ warning 6002: The table/view 'BullshitTracker.dbo.PurchasesByCategory' does not 
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxRates">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.TaxRate">
+              <MappingFragment StoreEntitySet="TaxRates">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
