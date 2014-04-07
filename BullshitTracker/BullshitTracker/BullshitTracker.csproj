@@ -193,6 +193,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\BudgetVsActualController.cs" />
     <Compile Include="Controllers\ExeptionTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MerchantsController.cs" />
@@ -235,6 +236,9 @@
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Period.cs">
+      <DependentUpon>BullshitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PeriodBudgetVsActual.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PurchasesByCategory.cs">
@@ -474,6 +478,11 @@
     <Content Include="Views\Merchants\Details.cshtml" />
     <Content Include="Views\Merchants\Edit.cshtml" />
     <Content Include="Views\Merchants\Index.cshtml" />
+    <Content Include="Views\BudgetVsActual\Create.cshtml" />
+    <Content Include="Views\BudgetVsActual\Delete.cshtml" />
+    <Content Include="Views\BudgetVsActual\Details.cshtml" />
+    <Content Include="Views\BudgetVsActual\Edit.cshtml" />
+    <Content Include="Views\BudgetVsActual\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -27,6 +27,7 @@
         <AssociationConnector Association="BullshitTrackerModel.FK_MonthlyBudget_Periods" />
         <EntityTypeShape EntityType="BullshitTrackerModel.TaxRate" Width="1.5" PointX="8.25" PointY="5.125" />
         <AssociationConnector Association="BullshitTrackerModel.FK_ExceptionTransactions_TaxRates" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.PeriodBudgetVsActual" Width="2.875" PointX="0.75" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

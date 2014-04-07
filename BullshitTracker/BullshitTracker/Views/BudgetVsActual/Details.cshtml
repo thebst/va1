@@ -1,0 +1,82 @@
+﻿@model BullshitTracker.Models.PeriodBudgetVsActual
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PeriodBudgetVsActual</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BudgetName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BudgetName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BudgetedAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BudgetedAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PercentOfBudget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PercentOfBudget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Month)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Month)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

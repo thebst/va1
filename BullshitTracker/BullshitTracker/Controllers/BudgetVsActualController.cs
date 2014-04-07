@@ -11,107 +11,111 @@ using BullshitTracker.Models;
 namespace BullshitTracker.Controllers
 {
     [Authorize(Users = @"MarkDeganiLocalhost, MarkDegani, RebeccaDegani")]
-    public class TaxRatesController : Controller
+    public class BudgetVsActualController : Controller
     {
         private BullshitTrackerEntities db = new BullshitTrackerEntities();
 
-        // GET: /TaxRates/
-        public ActionResult Index()
+        // GET: /BudgetVsActual/
+        public ActionResult Index(int periodId)
         {
-            return View(db.TaxRates.ToList());
+            ViewBag.PeriodName = db.Periods.Find(periodId).Name.ToString();
+
+            return View(db.PeriodBudgetVsActuals.ToList().Where(n => n.PeriodId == periodId));
+
+
         }
 
-        // GET: /TaxRates/Details/5
+        // GET: /BudgetVsActual/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TaxRate taxrate = db.TaxRates.Find(id);
-            if (taxrate == null)
+            PeriodBudgetVsActual periodbudgetvsactual = db.PeriodBudgetVsActuals.Find(id);
+            if (periodbudgetvsactual == null)
             {
                 return HttpNotFound();
             }
-            return View(taxrate);
+            return View(periodbudgetvsactual);
         }
 
-        // GET: /TaxRates/Create
+        // GET: /BudgetVsActual/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /TaxRates/Create
+        // POST: /BudgetVsActual/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Rate,Description")] TaxRate taxrate)
+        public ActionResult Create([Bind(Include="Id,PeriodId,PeriodName,StartDate,EndDate,BudgetId,BudgetName,ActualAmount,BudgetedAmount,PercentOfBudget,Month,Year")] PeriodBudgetVsActual periodbudgetvsactual)
         {
             if (ModelState.IsValid)
             {
-                db.TaxRates.Add(taxrate);
+                db.PeriodBudgetVsActuals.Add(periodbudgetvsactual);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(taxrate);
+            return View(periodbudgetvsactual);
         }
 
-        // GET: /TaxRates/Edit/5
+        // GET: /BudgetVsActual/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TaxRate taxrate = db.TaxRates.Find(id);
-            if (taxrate == null)
+            PeriodBudgetVsActual periodbudgetvsactual = db.PeriodBudgetVsActuals.Find(id);
+            if (periodbudgetvsactual == null)
             {
                 return HttpNotFound();
             }
-            return View(taxrate);
+            return View(periodbudgetvsactual);
         }
 
-        // POST: /TaxRates/Edit/5
+        // POST: /BudgetVsActual/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Rate,Description")] TaxRate taxrate)
+        public ActionResult Edit([Bind(Include="Id,PeriodId,PeriodName,StartDate,EndDate,BudgetId,BudgetName,ActualAmount,BudgetedAmount,PercentOfBudget,Month,Year")] PeriodBudgetVsActual periodbudgetvsactual)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(taxrate).State = EntityState.Modified;
+                db.Entry(periodbudgetvsactual).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(taxrate);
+            return View(periodbudgetvsactual);
         }
 
-        // GET: /TaxRates/Delete/5
+        // GET: /BudgetVsActual/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TaxRate taxrate = db.TaxRates.Find(id);
-            if (taxrate == null)
+            PeriodBudgetVsActual periodbudgetvsactual = db.PeriodBudgetVsActuals.Find(id);
+            if (periodbudgetvsactual == null)
             {
                 return HttpNotFound();
             }
-            return View(taxrate);
+            return View(periodbudgetvsactual);
         }
 
-        // POST: /TaxRates/Delete/5
+        // POST: /BudgetVsActual/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TaxRate taxrate = db.TaxRates.Find(id);
-            db.TaxRates.Remove(taxrate);
+            PeriodBudgetVsActual periodbudgetvsactual = db.PeriodBudgetVsActuals.Find(id);
+            db.PeriodBudgetVsActuals.Remove(periodbudgetvsactual);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

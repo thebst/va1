@@ -10,6 +10,7 @@ using BullshitTracker.Models;
 
 namespace BullshitTracker.Controllers
 {
+    [Authorize(Users = @"MarkDeganiLocalhost, MarkDegani, RebeccaDegani")]
     public class ExeptionTransactionController : Controller
     {
         private BullshitTrackerEntities db = new BullshitTrackerEntities();

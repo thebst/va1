@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BullshitTracker.Models.PeriodBudgetVsActual>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Budget vs Actual for @ViewBag.PeriodName</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.BudgetName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BudgetedAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActualAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PercentOfBudget)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.BudgetName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BudgetedAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActualAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PercentOfBudget)
+        </td>
+
+    </tr>
+}
+
+</table>
