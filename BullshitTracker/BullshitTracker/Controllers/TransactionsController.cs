@@ -18,8 +18,8 @@ namespace BullshitTracker.Controllers
         // GET: /Transactions/
         public ActionResult Index()
         {
-            var transactions = db.Transactions.Include(t => t.Account1).Include(t => t.Vendor1);
-            return View(transactions.ToList());
+            var transactions = db.Transactions.Include(t => t.Account1).Include(t => t.Vendor1).OrderByDescending(n => n.TransactionDate);
+            return View(transactions.ToList().OrderByDescending(n => n.TransactionDate));
         }
 
         // GET: /Transactions/Details/5
