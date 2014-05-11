@@ -330,7 +330,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransactionId" Type="Int32" />
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="AmountPreTax" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="HST" Type="Boolean" />
@@ -404,7 +404,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ExceptionTransactions_Transactions">
-          <End Role="Transactions" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="1" />
           <End Role="ExceptionTransactions" Type="Self.ExceptionTransaction" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Transactions">
