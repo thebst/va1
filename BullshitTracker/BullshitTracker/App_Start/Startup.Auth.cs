@@ -20,9 +20,9 @@ namespace BullshitTracker
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            app.UseMicrosoftAccountAuthentication(
-                clientId: "000000004811C23D",
-                clientSecret: "x79hkc9ccBumQ60JZ-nrbV52gm95CUKK");
+            //app.UseMicrosoftAccountAuthentication(
+            //    clientId: "",
+            //    clientSecret: "");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",

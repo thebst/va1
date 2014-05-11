@@ -15,7 +15,7 @@ namespace BullshitTracker.Models
     public partial class ExceptionTransaction
     {
         public int Id { get; set; }
-        public int TransactionId { get; set; }
+        public Nullable<int> TransactionId { get; set; }
         public string Description { get; set; }
         public Nullable<decimal> AmountPreTax { get; set; }
         public Nullable<bool> HST { get; set; }
