@@ -1,0 +1,56 @@
+﻿@model BullshitTracker.Models.CashWithdrawl
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CashWithdrawl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateWithdrawn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateWithdrawn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account1.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account1.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

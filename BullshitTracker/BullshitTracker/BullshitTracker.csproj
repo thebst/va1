@@ -194,6 +194,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\BudgetVsActualController.cs" />
+    <Compile Include="Controllers\CashWithdrawlsController.cs" />
     <Compile Include="Controllers\ExeptionTransactionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MerchantsController.cs" />
@@ -486,6 +487,11 @@
     <Content Include="Views\BudgetVsActual\Details.cshtml" />
     <Content Include="Views\BudgetVsActual\Edit.cshtml" />
     <Content Include="Views\BudgetVsActual\Index.cshtml" />
+    <Content Include="Views\CashWithdrawls\Create.cshtml" />
+    <Content Include="Views\CashWithdrawls\Delete.cshtml" />
+    <Content Include="Views\CashWithdrawls\Details.cshtml" />
+    <Content Include="Views\CashWithdrawls\Edit.cshtml" />
+    <Content Include="Views\CashWithdrawls\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
