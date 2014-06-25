@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BullshitTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BullshitTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="Id" />
@@ -18,6 +18,16 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BudgetName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CashWithdrawls">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateWithdrawn" Type="date" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="ToAccount" Type="int" Nullable="false" />
+          <Property Name="FromAccount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -122,6 +132,30 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Amount" Type="float" />
         </EntityType>
+        <Association Name="FK_CashWithdrawls_FromAccount">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
+          <End Role="CashWithdrawls" Type="Self.CashWithdrawls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashWithdrawls">
+              <PropertyRef Name="FromAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashWithdrawls_ToAccount">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
+          <End Role="CashWithdrawls" Type="Self.CashWithdrawls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashWithdrawls">
+              <PropertyRef Name="ToAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Categories_Budgets">
           <End Role="Budgets" Type="Self.Budgets" Multiplicity="0..1" />
           <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
@@ -233,6 +267,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
         <EntityContainer Name="BullshitTrackerModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CashWithdrawls" EntityType="Self.CashWithdrawls" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExceptionTransactions" EntityType="Self.ExceptionTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyBudget" EntityType="Self.MonthlyBudget" Schema="dbo" store:Type="Tables" />
@@ -264,6 +299,14 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
     [PurchasesByCategory].[Amount] AS [Amount]
     FROM [dbo].[PurchasesByCategory] AS [PurchasesByCategory]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_CashWithdrawls_FromAccount" Association="Self.FK_CashWithdrawls_FromAccount">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="CashWithdrawls" EntitySet="CashWithdrawls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashWithdrawls_ToAccount" Association="Self.FK_CashWithdrawls_ToAccount">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="CashWithdrawls" EntitySet="CashWithdrawls" />
+          </AssociationSet>
           <AssociationSet Name="FK_Categories_Budgets" Association="Self.FK_Categories_Budgets">
             <End Role="Budgets" EntitySet="Budgets" />
             <End Role="Categories" EntitySet="Categories" />
@@ -312,6 +355,8 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Accounts" FromRole="Accounts" ToRole="Transactions" />
+          <NavigationProperty Name="CashWithdrawls" Relationship="BullshitTrackerModel.FK_CashWithdrawls_FromAccount" FromRole="Account" ToRole="CashWithdrawl" />
+          <NavigationProperty Name="CashWithdrawls1" Relationship="BullshitTrackerModel.FK_CashWithdrawls_ToAccount" FromRole="Account" ToRole="CashWithdrawl" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -483,6 +528,15 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
             <End Role="ExceptionTransaction" EntitySet="ExceptionTransactions" />
           </AssociationSet>
           <EntitySet Name="PeriodBudgetVsActuals" EntityType="BullshitTrackerModel.PeriodBudgetVsActual" />
+          <EntitySet Name="CashWithdrawls" EntityType="BullshitTrackerModel.CashWithdrawl" />
+          <AssociationSet Name="FK_CashWithdrawls_FromAccount" Association="BullshitTrackerModel.FK_CashWithdrawls_FromAccount">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="CashWithdrawl" EntitySet="CashWithdrawls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashWithdrawls_ToAccount" Association="BullshitTrackerModel.FK_CashWithdrawls_ToAccount">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="CashWithdrawl" EntitySet="CashWithdrawls" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PurchasesByCategory">
           <Key>
@@ -629,6 +683,42 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <Property Name="Month" Type="Int32" />
           <Property Name="Year" Type="Int32" />
         </EntityType>
+        <EntityType Name="CashWithdrawl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateWithdrawn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ToAccount" Type="Int32" Nullable="false" />
+          <Property Name="FromAccount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="BullshitTrackerModel.FK_CashWithdrawls_FromAccount" FromRole="CashWithdrawl" ToRole="Account" />
+          <NavigationProperty Name="Account1" Relationship="BullshitTrackerModel.FK_CashWithdrawls_ToAccount" FromRole="CashWithdrawl" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_CashWithdrawls_FromAccount">
+          <End Type="BullshitTrackerModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="BullshitTrackerModel.CashWithdrawl" Role="CashWithdrawl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashWithdrawl">
+              <PropertyRef Name="FromAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashWithdrawls_ToAccount">
+          <End Type="BullshitTrackerModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="BullshitTrackerModel.CashWithdrawl" Role="CashWithdrawl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashWithdrawl">
+              <PropertyRef Name="ToAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -751,6 +841,17 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="PeriodName" ColumnName="PeriodName" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashWithdrawls">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.CashWithdrawl">
+              <MappingFragment StoreEntitySet="CashWithdrawls">
+                <ScalarProperty Name="FromAccount" ColumnName="FromAccount" />
+                <ScalarProperty Name="ToAccount" ColumnName="ToAccount" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DateWithdrawn" ColumnName="DateWithdrawn" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

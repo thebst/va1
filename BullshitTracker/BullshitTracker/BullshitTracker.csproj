@@ -225,6 +225,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BullshitModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CashWithdrawl.cs">
+      <DependentUpon>BullshitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>

@@ -12,20 +12,15 @@ namespace BullshitTracker.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class CashWithdrawl
     {
-        public Account()
-        {
-            this.Transactions = new HashSet<Transaction>();
-            this.CashWithdrawls = new HashSet<CashWithdrawl>();
-            this.CashWithdrawls1 = new HashSet<CashWithdrawl>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
+        public System.DateTime DateWithdrawn { get; set; }
+        public decimal Amount { get; set; }
+        public int ToAccount { get; set; }
+        public int FromAccount { get; set; }
     
-        public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual ICollection<CashWithdrawl> CashWithdrawls { get; set; }
-        public virtual ICollection<CashWithdrawl> CashWithdrawls1 { get; set; }
+        public virtual Account Account { get; set; }
+        public virtual Account Account1 { get; set; }
     }
 }
