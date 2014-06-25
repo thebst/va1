@@ -40,8 +40,8 @@ namespace BullshitTracker.Controllers
         // GET: /Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.Account = new SelectList(db.Accounts, "Id", "Name");
-            ViewBag.Vendor = new SelectList(db.Vendors, "Id", "Name");
+            ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name");
+            ViewBag.Vendor = new SelectList(db.Vendors.OrderBy(n => n.Name), "Id", "Name");
             return View();
         }
 
@@ -59,8 +59,8 @@ namespace BullshitTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Account = new SelectList(db.Accounts, "Id", "Name", transaction.Account);
-            ViewBag.Vendor = new SelectList(db.Vendors, "Id", "Name", transaction.Vendor);
+            ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name", transaction.Account);
+            ViewBag.Vendor = new SelectList(db.Vendors.OrderBy(n => n.Name), "Id", "Name", transaction.Vendor);
             return View(transaction);
         }
 
@@ -76,8 +76,8 @@ namespace BullshitTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Account = new SelectList(db.Accounts, "Id", "Name", transaction.Account);
-            ViewBag.Vendor = new SelectList(db.Vendors, "Id", "Name", transaction.Vendor);
+            ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name", transaction.Account);
+            ViewBag.Vendor = new SelectList(db.Vendors.OrderBy(n => n.Name), "Id", "Name", transaction.Vendor);
             return View(transaction);
         }
 
@@ -94,8 +94,8 @@ namespace BullshitTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Account = new SelectList(db.Accounts, "Id", "Name", transaction.Account);
-            ViewBag.Vendor = new SelectList(db.Vendors, "Id", "Name", transaction.Vendor);
+            ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name", transaction.Account);
+            ViewBag.Vendor = new SelectList(db.Vendors.OrderBy(n => n.Name), "Id", "Name", transaction.Vendor);
             return View(transaction);
         }
 
