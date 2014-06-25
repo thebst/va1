@@ -31,6 +31,8 @@
         <EntityTypeShape EntityType="BullshitTrackerModel.CashWithdrawl" Width="1.5" PointX="2.875" PointY="16.75" />
         <AssociationConnector Association="BullshitTrackerModel.FK_CashWithdrawls_FromAccount" />
         <AssociationConnector Association="BullshitTrackerModel.FK_CashWithdrawls_ToAccount" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.AccountType" Width="1.5" PointX="1.375" PointY="20.375" />
+        <AssociationConnector Association="BullshitTrackerModel.FK_Accounts_ToAccountTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

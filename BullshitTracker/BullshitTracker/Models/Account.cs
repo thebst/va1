@@ -23,9 +23,11 @@ namespace BullshitTracker.Models
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<int> AccountType { get; set; }
     
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual ICollection<CashWithdrawl> CashWithdrawls { get; set; }
         public virtual ICollection<CashWithdrawl> CashWithdrawls1 { get; set; }
+        public virtual AccountType AccountType1 { get; set; }
     }
 }

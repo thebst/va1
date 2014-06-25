@@ -40,8 +40,8 @@ namespace BullshitTracker.Controllers
         // GET: CashWithdrawls/Create
         public ActionResult Create()
         {
-            ViewBag.FromAccount = new SelectList(db.Accounts, "Id", "Name");
-            ViewBag.ToAccount = new SelectList(db.Accounts, "Id", "Name");
+            ViewBag.FromAccount = new SelectList(db.Accounts.Where(n => n.AccountType == 2), "Id", "Name");
+            ViewBag.ToAccount = new SelectList(db.Accounts.Where(n => n.AccountType == 1), "Id", "Name");
             return View();
         }
 

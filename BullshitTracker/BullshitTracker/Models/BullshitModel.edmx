@@ -11,6 +11,14 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="AccountType" Type="int" />
+        </EntityType>
+        <EntityType Name="AccountTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountTypeName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Budgets">
           <Key>
@@ -132,6 +140,18 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Amount" Type="float" />
         </EntityType>
+        <Association Name="FK_Accounts_ToAccountTypes">
+          <End Role="AccountTypes" Type="Self.AccountTypes" Multiplicity="0..1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="AccountType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CashWithdrawls_FromAccount">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="1" />
           <End Role="CashWithdrawls" Type="Self.CashWithdrawls" Multiplicity="*" />
@@ -266,6 +286,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
         </Association>
         <EntityContainer Name="BullshitTrackerModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountTypes" EntityType="Self.AccountTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CashWithdrawls" EntityType="Self.CashWithdrawls" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
@@ -299,6 +320,10 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
     [PurchasesByCategory].[Amount] AS [Amount]
     FROM [dbo].[PurchasesByCategory] AS [PurchasesByCategory]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Accounts_ToAccountTypes" Association="Self.FK_Accounts_ToAccountTypes">
+            <End Role="AccountTypes" EntitySet="AccountTypes" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
           <AssociationSet Name="FK_CashWithdrawls_FromAccount" Association="Self.FK_CashWithdrawls_FromAccount">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="CashWithdrawls" EntitySet="CashWithdrawls" />
@@ -357,6 +382,8 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Accounts" FromRole="Accounts" ToRole="Transactions" />
           <NavigationProperty Name="CashWithdrawls" Relationship="BullshitTrackerModel.FK_CashWithdrawls_FromAccount" FromRole="Account" ToRole="CashWithdrawl" />
           <NavigationProperty Name="CashWithdrawls1" Relationship="BullshitTrackerModel.FK_CashWithdrawls_ToAccount" FromRole="Account" ToRole="CashWithdrawl" />
+          <Property Name="AccountType" Type="Int32" />
+          <NavigationProperty Name="AccountType1" Relationship="BullshitTrackerModel.FK_Accounts_ToAccountTypes" FromRole="Account" ToRole="AccountType" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -536,6 +563,11 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <AssociationSet Name="FK_CashWithdrawls_ToAccount" Association="BullshitTrackerModel.FK_CashWithdrawls_ToAccount">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="CashWithdrawl" EntitySet="CashWithdrawls" />
+          </AssociationSet>
+          <EntitySet Name="AccountTypes" EntityType="BullshitTrackerModel.AccountType" />
+          <AssociationSet Name="FK_Accounts_ToAccountTypes" Association="BullshitTrackerModel.FK_Accounts_ToAccountTypes">
+            <End Role="AccountType" EntitySet="AccountTypes" />
+            <End Role="Account" EntitySet="Accounts" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="PurchasesByCategory">
@@ -719,6 +751,26 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AccountType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Accounts" Relationship="BullshitTrackerModel.FK_Accounts_ToAccountTypes" FromRole="AccountType" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_Accounts_ToAccountTypes">
+          <End Type="BullshitTrackerModel.AccountType" Role="AccountType" Multiplicity="0..1" />
+          <End Type="BullshitTrackerModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AccountType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -728,6 +780,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="BullshitTrackerModel.Account">
               <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -852,6 +905,14 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
                 <ScalarProperty Name="ToAccount" ColumnName="ToAccount" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="DateWithdrawn" ColumnName="DateWithdrawn" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountTypes">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.AccountType">
+              <MappingFragment StoreEntitySet="AccountTypes">
+                <ScalarProperty Name="AccountTypeName" ColumnName="AccountTypeName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
