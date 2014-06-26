@@ -4,27 +4,53 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>List of Transactions</h2>
+
+<style>
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
+    <colgroup>
+        <col width="300" />
+        <col width="120" />
+        <col width="100" />
+        <col width="150" />
+        <col width="300" />
+        <col width="200" />
+
+
+    </colgroup>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TransactionDate)
+            @*@Html.DisplayNameFor(model => model.TransactionDate)*@
+            Date
         </th>
-        <th>
+        <th style="text-align:right; padding-right:25px">
             @Html.DisplayNameFor(model => model.Total)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account1.Name)
+            Account
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Vendor1.Name)
+            Vendor
+            @*@Html.DisplayNameFor(model => model.Vendor1.Name)*@
 
             
         </th>
@@ -37,12 +63,13 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TransactionDate)
+            @Html.DisplayFor(modelItem => item.TransactionDate, "{0:dd/MM/yyyy}")
         </td>
-        <td>
+        <td align="right" style="font-weight:bold; padding-right:25px">
             @Html.DisplayFor(modelItem => item.Total)
         </td>
         <td>
+
             @Html.DisplayFor(modelItem => item.Account1.Name)
         </td>
         <td>
