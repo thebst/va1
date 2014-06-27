@@ -18,9 +18,44 @@ namespace BullshitTracker.Controllers
         // GET: /Transactions/
         public ActionResult Index()
         {
+            ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name");
+            ViewBag.Vendor = new SelectList(db.Vendors.OrderBy(n => n.Name), "Id", "Name");
+
             var transactions = db.Transactions.Include(t => t.Account1).Include(t => t.Vendor1).OrderByDescending(n => n.TransactionDate);
             return View(transactions.ToList().OrderByDescending(n => n.TransactionDate));
         }
+
+        [HttpPost]
+        public ActionResult Index(int? Vendor, int? Account)
+        {
+            ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name");
+            ViewBag.Vendor = new SelectList(db.Vendors.OrderBy(n => n.Name), "Id", "Name");
+
+            var transactions = db.Transactions.Include(t => t.Account1).Include(t => t.Vendor1).OrderByDescending(n => n.TransactionDate);
+
+            IOrderedQueryable<Transaction> transactions2;
+
+
+            if(Vendor == null)
+            {
+                transactions2 = transactions;
+            }
+            else
+            {
+                transactions2 = transactions.Where(n => n.Vendor == Vendor).OrderByDescending(n => n.TransactionDate);
+            }
+
+            if (Account == null)
+            {
+            }
+            else
+            {
+                transactions2 = transactions2.Where(n => n.Account == Account).OrderByDescending(n => n.TransactionDate);
+            }
+
+            return View(transactions2.ToList().OrderByDescending(n => n.TransactionDate));
+        }
+
 
         // GET: /Transactions/Details/5
         public ActionResult Details(int? id)
