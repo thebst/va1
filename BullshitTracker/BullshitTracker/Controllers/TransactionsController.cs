@@ -75,6 +75,8 @@ namespace BullshitTracker.Controllers
         // GET: /Transactions/Create
         public ActionResult Create()
         {
+            ViewBag.newVendorCategory = new SelectList(db.Categories.OrderBy(n => n.Name), "Id", "Name");
+
             ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name");
             ViewBag.Vendor = new SelectList(db.Vendors.OrderBy(n => n.Name), "Id", "Name");
             return View();
@@ -85,10 +87,24 @@ namespace BullshitTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Description,TransactionDate,Vendor,Total,Account")] Transaction transaction)
+        public ActionResult Create([Bind(Include="Id,Description,TransactionDate,Vendor,Total,Account")] Transaction transaction, string newVendorName = "", int newVendorCategory = -1)
         {
+            var newVendor = new Vendor();
+
+
+
             if (ModelState.IsValid)
             {
+
+                if (newVendorCategory != null && newVendorCategory != -1)
+                {
+                    newVendor.Name = newVendorName;
+                    newVendor.Category = newVendorCategory;
+                    //db.Vendors.Add(newVendor);
+                    transaction.Vendor = db.Vendors.Add(newVendor).Id;
+
+                }
+  
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
                 return RedirectToAction("Index");
