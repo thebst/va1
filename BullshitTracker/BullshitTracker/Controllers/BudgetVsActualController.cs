@@ -16,9 +16,21 @@ namespace BullshitTracker.Controllers
         private BullshitTrackerEntities db = new BullshitTrackerEntities();
 
         // GET: /BudgetVsActual/
-        public ActionResult Index(int periodId)
+        public ActionResult Index(int? periodId)
         {
+
+
+            if (periodId == null)
+            {
+
+                periodId = db.Periods.Where(n => n.EndDate >= DateTime.Now && n.StartDate <= DateTime.Now).SingleOrDefault().Id-1;
+            };
+
             ViewBag.PeriodName = db.Periods.Find(periodId).Name.ToString();
+
+            ViewBag.Previous = periodId - 1;
+            ViewBag.Next = periodId + 1;
+
 
             return View(db.PeriodBudgetVsActuals.ToList().Where(n => n.PeriodId == periodId));
 

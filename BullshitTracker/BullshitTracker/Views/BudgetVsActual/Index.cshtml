@@ -5,24 +5,32 @@
 }
 
 <h2>Budget vs Actual for @ViewBag.PeriodName</h2>
-<a href="#">←Previous</a> <span></span>
 
-<a href="#">Next→</a>
+@Html.ActionLink("←Previous", "Index", "BudgetVsActual", new { periodId = @ViewBag.Previous }, null)
+@Html.ActionLink("Next→", "Index", "BudgetVsActual", new { periodId = @ViewBag.Next }, null)
+
 
 <table class="table">
+    <colgroup>
+        <col width="100" />
+        <col width="100" />
+        <col width="100" />
+        <col width="100" />
+        
+    </colgroup>
     <tr>
 
         <th>
-            @Html.DisplayNameFor(model => model.BudgetName)
+            Budget  
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BudgetedAmount)
+            Budget Amt.
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ActualAmount)
+            Actual Amt.
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PercentOfBudget)
+            % of Budget
         </th>
         <th></th>
     </tr>
@@ -33,14 +41,16 @@
         <td>
             @Html.DisplayFor(modelItem => item.BudgetName)
         </td>
-        <td>
+        <td style="text-align:right">
+
             @Html.DisplayFor(modelItem => item.BudgetedAmount)
         </td>
-        <td>
+        <td style="text-align:right; font-weight:bold">
+
             @Html.DisplayFor(modelItem => item.ActualAmount)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PercentOfBudget)
+        <td style="text-align:right">
+            @Html.DisplayFor(modelItem => item.PercentOfBudget)%
         </td>
 
     </tr>

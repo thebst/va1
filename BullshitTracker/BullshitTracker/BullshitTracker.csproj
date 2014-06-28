@@ -248,6 +248,7 @@
     <Compile Include="Models\PeriodBudgetVsActual.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PeriodBudgetVsActualP.cs" />
     <Compile Include="Models\PurchasesByCategory.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
