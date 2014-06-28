@@ -38,10 +38,12 @@ namespace BullshitTracker.Controllers
         }
 
         // GET: /ExeptionTransaction/Create
-        public ActionResult Create()
+        public ActionResult Create(int? TransactionId)
         {
+            ViewBag.TransaIdValue = TransactionId;
+
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name");
-            ViewBag.TransactionId = new SelectList(db.Transactions, "Id", "Description");
+            ViewBag.TransactionId = new SelectList(db.Transactions, "Id", "Description",TransactionId);
             ViewBag.TaxRate = new SelectList(db.TaxRates, "Id", "Description");
             return View();
         }
@@ -57,13 +59,14 @@ namespace BullshitTracker.Controllers
             {
                 db.ExceptionTransactions.Add(exceptiontransaction);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Transactions", new { Id = exceptiontransaction.TransactionId });
+
             }
 
             ViewBag.Category = new SelectList(db.Categories, "Id", "Name", exceptiontransaction.Category);
             ViewBag.TransactionId = new SelectList(db.Transactions, "Id", "Description", exceptiontransaction.TransactionId);
             ViewBag.TaxRate = new SelectList(db.TaxRates, "Id", "Description", exceptiontransaction.TaxRate);
-            return View(exceptiontransaction);
+            return RedirectToAction("Details", "Transactions", new { Id = exceptiontransaction.Transaction.Id });
         }
 
         // GET: /ExeptionTransaction/Edit/5
@@ -124,9 +127,11 @@ namespace BullshitTracker.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ExceptionTransaction exceptiontransaction = db.ExceptionTransactions.Find(id);
+            var transDetailsId = exceptiontransaction.TransactionId;
             db.ExceptionTransactions.Remove(exceptiontransaction);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Transactions", new { Id = transDetailsId });
+
         }
 
         protected override void Dispose(bool disposing)

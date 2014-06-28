@@ -1,30 +1,24 @@
 ﻿@model IEnumerable<BullshitTracker.Models.ExceptionTransaction>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create new exception for this transaction", "Create", "ExeptionTransaction",new {TransactionId = Model.FirstOrDefault().Transaction.Id},null)
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            Description
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AmountPreTax)
+            Pretax Amount
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category1.Name)
+            Category
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Transaction.Description)
+            Transaction
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TaxRate1.Description)
+            Tax Rate
         </th>
         <th></th>
     </tr>
@@ -37,6 +31,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.AmountPreTax)
         </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.Category1.Name)
         </td>
@@ -47,9 +42,8 @@
             @Html.DisplayFor(modelItem => item.TaxRate1.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", "ExeptionTransaction", new { id = item.Id }, null) |
+            @Html.ActionLink("Delete", "Delete","ExeptionTransaction", new { id=item.Id },null)
         </td>
     </tr>
 }

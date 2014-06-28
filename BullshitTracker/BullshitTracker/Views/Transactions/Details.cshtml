@@ -13,7 +13,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-
+            
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
@@ -52,7 +52,17 @@
 
     </dl>
 </div>
+@if(Model.ExceptionTransactions.Count > 0){
+@Html.Partial("~/Views/Transactions/ExceptionsPartial.cshtml",Model.ExceptionTransactions)
+}
+else
+{
+    <div>No exceptions!</div>
+    <div>
+        @Html.ActionLink("Create exception.", "Create", "ExeptionTransaction", new { TransactionId = Model.Id }, null)
+</div>
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit Transaction", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to Transaction List", "Index")
 </p>

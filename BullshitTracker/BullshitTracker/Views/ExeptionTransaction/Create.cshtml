@@ -40,13 +40,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HST, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HST)
-                @Html.ValidationMessageFor(model => model.HST)
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
@@ -56,13 +50,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Shame, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Shame)
-                @Html.ValidationMessageFor(model => model.Shame)
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TaxRate, "TaxRate", new { @class = "control-label col-md-2" })
@@ -81,7 +68,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Transaction", "Details", "Transactions", new { Id = ViewBag.TransaIdValue }, null)
 </div>
 
 @section Scripts {

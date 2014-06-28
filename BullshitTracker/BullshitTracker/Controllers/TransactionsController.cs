@@ -96,7 +96,7 @@ namespace BullshitTracker.Controllers
             if (ModelState.IsValid)
             {
 
-                if (newVendorCategory != null && newVendorCategory != -1)
+                if (newVendorCategory != -1)
                 {
                     newVendor.Name = newVendorName;
                     newVendor.Category = newVendorCategory;
@@ -107,7 +107,8 @@ namespace BullshitTracker.Controllers
   
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details",new {Id = transaction.Id});
+
             }
 
             ViewBag.Account = new SelectList(db.Accounts.OrderBy(n => n.Name), "Id", "Name", transaction.Account);
