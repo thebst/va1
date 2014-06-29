@@ -140,6 +140,24 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Amount" Type="float" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Transactions_All">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+            <PropertyRef Name="SubtransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+          <Property Name="SubtransactionId" Type="int" Nullable="false" />
+          <Property Name="TransactionDate" Type="date" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="VendorName" Type="varchar" MaxLength="50" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+          <Property Name="BudgetId" Type="int" />
+          <Property Name="BudgetName" Type="varchar" MaxLength="50" />
+          <Property Name="ActualAmount" Type="float" />
+          <Property Name="PeriodId" Type="int" />
+        </EntityType>
         <Association Name="FK_Accounts_ToAccountTypes">
           <End Role="AccountTypes" Type="Self.AccountTypes" Multiplicity="0..1" />
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
@@ -320,6 +338,20 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
     [PurchasesByCategory].[Amount] AS [Amount]
     FROM [dbo].[PurchasesByCategory] AS [PurchasesByCategory]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Transactions_All" EntityType="Self.Transactions_All" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Transactions_All].[TransactionId] AS [TransactionId], 
+    [Transactions_All].[SubtransactionId] AS [SubtransactionId], 
+    [Transactions_All].[TransactionDate] AS [TransactionDate], 
+    [Transactions_All].[Description] AS [Description], 
+    [Transactions_All].[VendorName] AS [VendorName], 
+    [Transactions_All].[CategoryName] AS [CategoryName], 
+    [Transactions_All].[BudgetId] AS [BudgetId], 
+    [Transactions_All].[BudgetName] AS [BudgetName], 
+    [Transactions_All].[ActualAmount] AS [ActualAmount], 
+    [Transactions_All].[PeriodId] AS [PeriodId]
+    FROM [dbo].[Transactions_All] AS [Transactions_All]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Accounts_ToAccountTypes" Association="Self.FK_Accounts_ToAccountTypes">
             <End Role="AccountTypes" EntitySet="AccountTypes" />
             <End Role="Accounts" EntitySet="Accounts" />
@@ -428,6 +460,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <NavigationProperty Name="Vendor1" Relationship="Self.FK_Transactions_Vendors" FromRole="Transactions" ToRole="Vendors" />
           <NavigationProperty Name="PurchasesByCategories" Relationship="BullshitTrackerModel.TransactionPurchasesByCategory" FromRole="Transaction" ToRole="PurchasesByCategory" />
           <Property Name="Shame" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Transactions_All" Relationship="BullshitTrackerModel.TransactionTransactions_All" FromRole="Transaction" ToRole="Transactions_All" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -568,6 +601,11 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <AssociationSet Name="FK_Accounts_ToAccountTypes" Association="BullshitTrackerModel.FK_Accounts_ToAccountTypes">
             <End Role="AccountType" EntitySet="AccountTypes" />
             <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <EntitySet Name="Transactions_All" EntityType="BullshitTrackerModel.Transactions_All" />
+          <AssociationSet Name="TransactionTransactions_All" Association="BullshitTrackerModel.TransactionTransactions_All">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="Transactions_All" EntitySet="Transactions_All" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="PurchasesByCategory">
@@ -771,6 +809,35 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Transactions_All">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+            <PropertyRef Name="SubtransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <Property Name="SubtransactionId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="VendorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BudgetId" Type="Int32" />
+          <Property Name="BudgetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActualAmount" Type="Double" />
+          <Property Name="PeriodId" Type="Int32" />
+          <NavigationProperty Name="Transaction" Relationship="BullshitTrackerModel.TransactionTransactions_All" FromRole="Transactions_All" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="TransactionTransactions_All">
+          <End Type="BullshitTrackerModel.Transaction" Role="Transaction" Multiplicity="1" />
+          <End Type="BullshitTrackerModel.Transactions_All" Role="Transactions_All" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions_All">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -914,6 +981,22 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
               <MappingFragment StoreEntitySet="AccountTypes">
                 <ScalarProperty Name="AccountTypeName" ColumnName="AccountTypeName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions_All">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.Transactions_All">
+              <MappingFragment StoreEntitySet="Transactions_All">
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
+                <ScalarProperty Name="BudgetName" ColumnName="BudgetName" />
+                <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="SubtransactionId" ColumnName="SubtransactionId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

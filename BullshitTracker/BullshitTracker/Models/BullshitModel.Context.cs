@@ -38,5 +38,6 @@ namespace BullshitTracker.Models
         public virtual DbSet<PeriodBudgetVsActual> PeriodBudgetVsActuals { get; set; }
         public virtual DbSet<CashWithdrawl> CashWithdrawls { get; set; }
         public virtual DbSet<AccountType> AccountTypes { get; set; }
+        public virtual DbSet<Transactions_All> Transactions_All { get; set; }
     }
 }

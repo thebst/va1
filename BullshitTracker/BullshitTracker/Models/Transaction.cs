@@ -18,6 +18,7 @@ namespace BullshitTracker.Models
         {
             this.ExceptionTransactions = new HashSet<ExceptionTransaction>();
             this.PurchasesByCategories = new HashSet<PurchasesByCategory>();
+            this.Transactions_All = new HashSet<Transactions_All>();
         }
     
         public int Id { get; set; }
@@ -32,5 +33,6 @@ namespace BullshitTracker.Models
         public virtual ICollection<ExceptionTransaction> ExceptionTransactions { get; set; }
         public virtual Vendor Vendor1 { get; set; }
         public virtual ICollection<PurchasesByCategory> PurchasesByCategories { get; set; }
+        public virtual ICollection<Transactions_All> Transactions_All { get; set; }
     }
 }

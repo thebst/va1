@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="BullshitTrackerModel.Account" Width="1.5" PointX="0.625" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="BullshitTrackerModel.Category" Width="1.5" PointX="11.125" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="BullshitTrackerModel.ExceptionTransaction" Width="1.875" PointX="5" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BullshitTrackerModel.Transaction" Width="1.5" PointX="2.625" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.Transaction" Width="1.5" PointX="13.125" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BullshitTrackerModel.Vendor" Width="1.5" PointX="8.875" PointY="9.875" IsExpanded="true" />
         <AssociationConnector Association="BullshitTrackerModel.FK_Transactions_Accounts" ManuallyRouted="false" />
         <AssociationConnector Association="BullshitTrackerModel.FK_ExceptionTransactions_Categories" ManuallyRouted="false" />
@@ -33,6 +33,8 @@
         <AssociationConnector Association="BullshitTrackerModel.FK_CashWithdrawls_ToAccount" />
         <EntityTypeShape EntityType="BullshitTrackerModel.AccountType" Width="1.5" PointX="1.375" PointY="20.375" />
         <AssociationConnector Association="BullshitTrackerModel.FK_Accounts_ToAccountTypes" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.Transactions_All" Width="1.5" PointX="15.5" PointY="9.125" />
+        <AssociationConnector Association="BullshitTrackerModel.TransactionTransactions_All" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
