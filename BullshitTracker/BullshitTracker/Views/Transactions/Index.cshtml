@@ -80,10 +80,12 @@
                 <li class="list-group-item">
                     @Html.DisplayFor(modelItem => item.Vendor1.Name) (@Html.DisplayFor(modelItem => item.Vendor1.Category1.Name))
                 </li>
+                <li class="list-group-item">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-default btn-large" }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-default btn-large" })
+                </li>
 
-
-
-            </ul>
+</ul>
         </div>
     }
 </div>
