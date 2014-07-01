@@ -27,7 +27,7 @@ namespace BullshitTracker.Controllers
             IOrderedQueryable<Transactions_All> transactions_All2;
 
 
-            if (Category == null)
+            if (Category == null  || Category == -1)
             {
                 transactions_All2 = transactions_All;
             }
@@ -44,7 +44,7 @@ namespace BullshitTracker.Controllers
                 transactions_All2 = transactions_All2.Where(n => n.BudgetId == Budget).OrderByDescending(n => n.TransactionDate);
             }
 
-            if (Period == null)
+            if (Period == null) 
             {
             }
             else

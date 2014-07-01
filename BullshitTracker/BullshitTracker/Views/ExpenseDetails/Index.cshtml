@@ -30,27 +30,27 @@
         <div class="form-horizontal">
 
             <div class="form-group">
-                <label class="control-label col-md-2">Filter Budget:</label>
+                <label class="control-label col-md-2">Budget:</label>
 
                 <div class="col-md-10">
-                    @Html.DropDownList("Budget", String.Empty)
+                    @Html.DropDownList("Budget",null ,"All Budgets", new {style ="width:200px" })
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="control-label col-md-2">Filter Category:</label>
+                <label class="control-label col-md-2">Category:</label>
 
                 <div class="col-md-10">
-                    @Html.DropDownList("Category", String.Empty)
+                    @Html.DropDownList("Category",null, "All Categories", new { style = "width:200px" })
                 </div>
 
             </div>
 
             <div class="form-group">
-                <label class="control-label col-md-2">Filter Category:</label>
+                <label class="control-label col-md-2"> Period:</label>
 
                 <div class="col-md-10">
-                    @Html.DropDownList("Period", String.Empty)
+                    @Html.DropDownList("Period", null, "All Periods", new { style = "width:200px" })
                 </div>
 
             </div>
@@ -165,3 +165,27 @@
     }
 
 </table>
+
+
+@section scripts {
+    
+<script type="text/javascript">
+    $('#Budget').change(function () {
+        var selectedBudget = $(this).val();
+        if (selectedBudget != null && selectedBudget != '') {
+            $.getJSON('@Url.Action("Categoryxs")', { Budget: selectedBudget }, function (data) {
+                var categorySelect = $('#Category');
+                categorySelect.empty();
+                categorySelect.append($('<option/>', {value: -1, text:'All Categories'}));
+
+                $.each(data.result, function (index, item) {
+                    categorySelect.append($('<option/>', {
+                        value: item.Id,
+                        text: item.Name
+                    }));
+                });
+            });
+        }
+    });
+</script>
+    }
