@@ -6,9 +6,11 @@
 
 <h2>Budget vs Actual for @ViewBag.PeriodName</h2>
 
-@Html.ActionLink("←Previous", "Index", "BudgetVsActual", new { periodId = @ViewBag.Previous }, null)
-@Html.ActionLink("Next→", "Index", "BudgetVsActual", new { periodId = @ViewBag.Next }, null)
+@Html.ActionLink("←Previous", "Index", "BudgetVsActual", new { periodId = @ViewBag.Previous }, new { @class = "btn btn-default btn-large" })
+@Html.ActionLink("Next→", "Index", "BudgetVsActual", new { periodId = @ViewBag.Next }, new { @class = "btn btn-default btn-large" })
 
+<br />
+<br />
 
 <table class="table">
     <colgroup>
@@ -57,8 +59,8 @@
     </tr>
 }
 
-    <tr>
-        <td style="font-weight:bold; font-size:larger">
+    <tr style="font-weight:bold; font-size:larger">
+        <td>
             Total
         </td>
         <td style="text-align:right">

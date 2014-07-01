@@ -266,6 +266,7 @@
     <Compile Include="Models\Transactions_All.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Transactions_AllP.cs" />
     <Compile Include="Models\Vendor.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>

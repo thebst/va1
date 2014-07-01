@@ -19,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TransactionDate)
+            Transaction Date
         </dt>
 
         <dd>
@@ -35,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Account1.Name)
+            Account
         </dt>
 
         <dd>
@@ -43,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Vendor1.Name)
+            Merchant
         </dt>
 
         <dd>
@@ -58,10 +58,17 @@
 else
 {
     <div>No exceptions!</div>
+    <br />
+    
     <div>
-        @Html.ActionLink("Create exception.", "Create", "ExeptionTransaction", new { TransactionId = Model.Id }, null)
+
+
+        @Html.ActionLink("Create exception.", "Create", "ExeptionTransaction", new { TransactionId = Model.Id }, new { @class = "btn btn-primary" })
 </div>
 }
+
+<br />
+
 <p>
     @Html.ActionLink("Edit Transaction", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to Transaction List", "Index")

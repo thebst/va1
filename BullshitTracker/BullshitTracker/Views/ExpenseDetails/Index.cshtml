@@ -1,15 +1,24 @@
 ﻿@model IEnumerable<BullshitTracker.Models.Transactions_All>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Expenses";
 }
 
-<h2>Index</h2>
+<h2>Expenses</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
+<style>
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
 
 @using (Html.BeginForm())
 {
@@ -56,15 +65,58 @@
 }
 
 
+<div class="visible-xs">
+    @foreach (var item in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading" style="font-weight:bold">
+                @Html.ActionLink(item.Description, "Details", "Transactions", new { Id = item.TransactionId }, null)
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                </li>
 
-<table class="table">
+                <li class="list-group-item" style="font-weight:bold">
+                    @Html.DisplayFor(modelItem => item.ActualAmount)
+                </li>
+
+                <li class="list-group-item">
+                    @Html.DisplayFor(modelItem => item.VendorName)
+                </li>
+
+                <li class="list-group-item">
+                    @Html.DisplayFor(modelItem => item.BudgetName) → @Html.DisplayFor(modelItem => item.CategoryName)
+                </li>
+
+            </ul>
+        </div>
+    }
+</div>
+
+
+
+<table class="table hidden-xs">
+
+    <colgroup>
+        <col width="250" />
+        <col width="100" />
+        <col width="150" />
+        <col width="150" />
+        <col width="150" />
+        <col width="100" />
+
+
+    </colgroup>
+
     <tr>
 
-        <th>
-            Date
-        </th>
+
         <th>
             Description
+        </th>
+        <th>
+            Date
         </th>
         <th>
             Merchant
@@ -75,38 +127,41 @@
         <th>
             Budget
         </th>
-        <th>
+        <th style="text-align:right">
             Amount
         </th>
-        
+
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionDate)
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VendorName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
-        </td>
-     
-        <td>
-            @Html.DisplayFor(modelItem => item.BudgetName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActualAmount)
-        </td>
-       
-       
-    </tr>
-}
+
+
+            <td>
+                @Html.ActionLink(item.Description, "Details", "Transactions", new { Id = item.TransactionId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetName)
+            </td>
+            <td style="text-align:right; font-weight:bold">
+
+                @Html.DisplayFor(modelItem => item.ActualAmount)
+            </td>
+
+
+        </tr>
+    }
 
 </table>
