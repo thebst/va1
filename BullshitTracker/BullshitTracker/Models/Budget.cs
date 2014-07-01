@@ -18,6 +18,7 @@ namespace BullshitTracker.Models
         {
             this.Categories = new HashSet<Category>();
             this.MonthlyBudgets = new HashSet<MonthlyBudget>();
+            this.Transactions_All = new HashSet<Transactions_All>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,6 @@ namespace BullshitTracker.Models
     
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<MonthlyBudget> MonthlyBudgets { get; set; }
+        public virtual ICollection<Transactions_All> Transactions_All { get; set; }
     }
 }

@@ -31,6 +31,10 @@ namespace BullshitTracker.Controllers
             ViewBag.Previous = periodId - 1;
             ViewBag.Next = periodId + 1;
 
+            ViewBag.PeriodTotalActual = String.Format("{0:###,##0.00}",db.PeriodBudgetVsActualSummaries.Where(n => n.PeriodId == periodId).SingleOrDefault().ActualAmount);
+            ViewBag.PeriodBudgeted = String.Format("{0:###,##0.00}", db.PeriodBudgetVsActualSummaries.Where(n => n.PeriodId == periodId).SingleOrDefault().BudgetedAmount);
+            ViewBag.PercentOfBudget = string.Format("{0:0}", db.PeriodBudgetVsActualSummaries.Where(n => n.PeriodId == periodId).SingleOrDefault().PercentOfBudget);
+
 
             return View(db.PeriodBudgetVsActuals.ToList().Where(n => n.PeriodId == periodId));
 

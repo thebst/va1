@@ -1,0 +1,112 @@
+﻿@model IEnumerable<BullshitTracker.Models.Transactions_All>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Filteroo</div>
+        <br />
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Filter Budget:</label>
+
+                <div class="col-md-10">
+                    @Html.DropDownList("Budget", String.Empty)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Filter Category:</label>
+
+                <div class="col-md-10">
+                    @Html.DropDownList("Category", String.Empty)
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Filter Category:</label>
+
+                <div class="col-md-10">
+                    @Html.DropDownList("Period", String.Empty)
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Filter" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            Date
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Merchant
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Budget
+        </th>
+        <th>
+            Amount
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.TransactionDate)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VendorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+     
+        <td>
+            @Html.DisplayFor(modelItem => item.BudgetName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActualAmount)
+        </td>
+       
+       
+    </tr>
+}
+
+</table>

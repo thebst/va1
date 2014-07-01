@@ -196,6 +196,7 @@
     <Compile Include="Controllers\BudgetVsActualController.cs" />
     <Compile Include="Controllers\CashWithdrawlsController.cs" />
     <Compile Include="Controllers\ExeptionTransactionController.cs" />
+    <Compile Include="Controllers\ExpenseDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MerchantsController.cs" />
     <Compile Include="Controllers\PurchasesByCategoryController.cs" />
@@ -249,6 +250,9 @@
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PeriodBudgetVsActualP.cs" />
+    <Compile Include="Models\PeriodBudgetVsActualSummary.cs">
+      <DependentUpon>BullshitModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PurchasesByCategory.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
@@ -501,6 +505,8 @@
     <Content Include="Views\CashWithdrawls\Edit.cshtml" />
     <Content Include="Views\CashWithdrawls\Index.cshtml" />
     <Content Include="Views\Transactions\ExceptionsPartial.cshtml" />
+    <Content Include="Views\ExpenseDetails\Details.cshtml" />
+    <Content Include="Views\ExpenseDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

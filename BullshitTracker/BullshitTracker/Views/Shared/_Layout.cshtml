@@ -69,6 +69,25 @@
 
     </script>
 
+
+    <script type="text/javascript">
+    $('#Budget').change(function () {
+        var selectedBudget = $(this).val();
+        if (selectedBudget != null && selectedBudget != '') {
+            $.getJSON('@Url.Action("Categoryxs")', { Budget: selectedBudget }, function (data) {
+                var categorySelect = $('#Category');
+                categorySelect.empty();
+                $.each(data.result, function (index, item) {
+                    categorySelect.append($('<option/>', {
+                        value: item.Id,
+                        text: item.Name
+                    }));
+                });
+            });
+        }
+    });
+    </script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

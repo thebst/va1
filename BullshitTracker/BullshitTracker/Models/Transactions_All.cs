@@ -24,7 +24,9 @@ namespace BullshitTracker.Models
         public string BudgetName { get; set; }
         public Nullable<double> ActualAmount { get; set; }
         public Nullable<int> PeriodId { get; set; }
+        public int CategoryId { get; set; }
     
         public virtual Transaction Transaction { get; set; }
+        public virtual Budget Budget { get; set; }
     }
 }
