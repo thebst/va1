@@ -19,7 +19,8 @@ namespace BullshitTracker.Models
         [DisplayFormat(DataFormatString = "{0:#,##0.00}")]
         public Nullable<decimal> Total { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MMM dd, yyyy}",ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> TransactionDate { get; set; }
 
     }
