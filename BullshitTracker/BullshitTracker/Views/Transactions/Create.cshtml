@@ -81,9 +81,10 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Total, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Total, new { @type = "Number" })
+            @Html.LabelFor(model => model.Total, new { @class = "control-label col-md-2"})
+            <div class="col-md-10">     
+                @Html.TextBoxFor(model => model.Total, new { @type = "number" })
+                @* validation won't work because using textbox for.  using this to get type=number *@
                 @Html.ValidationMessageFor(model => model.Total)
             </div>
         </div>

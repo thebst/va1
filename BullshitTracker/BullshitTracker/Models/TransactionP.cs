@@ -15,7 +15,7 @@ namespace BullshitTracker.Models
 
     public partial class TransactionMetaData
     {
-
+        [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:#,##0.00}")]
         public Nullable<decimal> Total { get; set; }
 
