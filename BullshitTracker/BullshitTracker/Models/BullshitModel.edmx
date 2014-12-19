@@ -107,13 +107,11 @@
           <Property Name="Category" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'trackarayazqumed.dbo.PeriodBudgetVsActual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TrackerDB.dbo.PeriodBudgetVsActual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PeriodBudgetVsActual">
           <Key>
-            <PropertyRef Name="Id" />
             <PropertyRef Name="PeriodId" />
             <PropertyRef Name="BudgetId" />
-            <PropertyRef Name="ActualAmount" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="PeriodId" Type="int" Nullable="false" />
@@ -129,7 +127,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PeriodBudgetVsActual' does no
           <Property Name="Year" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'trackarayazqumed.dbo.PeriodBudgetVsActualSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TrackerDB.dbo.PeriodBudgetVsActualSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PeriodBudgetVsActualSummary">
           <Key>
             <PropertyRef Name="PeriodId" />
@@ -140,7 +138,21 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PeriodBudgetVsActualSummary' 
           <Property Name="PercentOfBudget" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TrackerDB.dbo.PeriodCategoryTotals' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PeriodCategoryTotals">
+          <Key>
+            <PropertyRef Name="BudgetId" />
+            <PropertyRef Name="PeriodId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="BudgetId" Type="int" Nullable="false" />
+          <Property Name="PeriodId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+          <Property Name="ActualAmount" Type="float" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TrackerDB.dbo.PurchasesByCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PurchasesByCategory">
           <Key>
             <PropertyRef Name="TransactionId" />
@@ -152,7 +164,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.PurchasesByCategory' does not
           <Property Name="Amount" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Transactions_All">
           <Key>
             <PropertyRef Name="TransactionId" />
@@ -244,7 +256,9 @@ warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not ha
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ExceptionTransactions_Transactions">
-          <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ExceptionTransactions" Type="Self.ExceptionTransactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Transactions">
@@ -350,6 +364,15 @@ warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not ha
     [PeriodBudgetVsActualSummary].[BudgetedAmount] AS [BudgetedAmount], 
     [PeriodBudgetVsActualSummary].[PercentOfBudget] AS [PercentOfBudget]
     FROM [dbo].[PeriodBudgetVsActualSummary] AS [PeriodBudgetVsActualSummary]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PeriodCategoryTotals" EntityType="Self.PeriodCategoryTotals" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PeriodCategoryTotals].[BudgetId] AS [BudgetId], 
+    [PeriodCategoryTotals].[PeriodId] AS [PeriodId], 
+    [PeriodCategoryTotals].[CategoryId] AS [CategoryId], 
+    [PeriodCategoryTotals].[CategoryName] AS [CategoryName], 
+    [PeriodCategoryTotals].[ActualAmount] AS [ActualAmount]
+    FROM [dbo].[PeriodCategoryTotals] AS [PeriodCategoryTotals]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PurchasesByCategory" EntityType="Self.PurchasesByCategory" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -634,6 +657,11 @@ warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not ha
             <End Role="Transactions_All" EntitySet="Transactions_All" />
           </AssociationSet>
           <EntitySet Name="PeriodBudgetVsActualSummaries" EntityType="BullshitTrackerModel.PeriodBudgetVsActualSummary" />
+          <EntitySet Name="PeriodCategoryTotals" EntityType="BullshitTrackerModel.PeriodCategoryTotal" />
+          <AssociationSet Name="PeriodBudgetVsActualPeriodCategoryTotal" Association="BullshitTrackerModel.PeriodBudgetVsActualPeriodCategoryTotal">
+            <End Role="PeriodBudgetVsActual" EntitySet="PeriodBudgetVsActuals" />
+            <End Role="PeriodCategoryTotal" EntitySet="PeriodCategoryTotals" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PurchasesByCategory">
           <Key>
@@ -763,10 +791,8 @@ warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not ha
         </Association>
         <EntityType Name="PeriodBudgetVsActual">
           <Key>
-            <PropertyRef Name="Id" />
             <PropertyRef Name="PeriodId" />
             <PropertyRef Name="BudgetId" />
-            <PropertyRef Name="ActualAmount" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="PeriodId" Type="Int32" Nullable="false" />
@@ -780,6 +806,7 @@ warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not ha
           <Property Name="PercentOfBudget" Type="Double" />
           <Property Name="Month" Type="Int32" />
           <Property Name="Year" Type="Int32" />
+          <NavigationProperty Name="PeriodCategoryTotals" Relationship="BullshitTrackerModel.PeriodBudgetVsActualPeriodCategoryTotal" FromRole="PeriodBudgetVsActual" ToRole="PeriodCategoryTotal" />
         </EntityType>
         <EntityType Name="CashWithdrawl">
           <Key>
@@ -890,6 +917,33 @@ warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not ha
           <Property Name="BudgetedAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="PercentOfBudget" Type="Double" />
         </EntityType>
+        <EntityType Name="PeriodCategoryTotal">
+          <Key>
+            <PropertyRef Name="BudgetId" />
+            <PropertyRef Name="PeriodId" />
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="BudgetId" Type="Int32" Nullable="false" />
+          <Property Name="PeriodId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActualAmount" Type="Double" Nullable="false" />
+          <NavigationProperty Name="PeriodBudgetVsActual" Relationship="BullshitTrackerModel.PeriodBudgetVsActualPeriodCategoryTotal" FromRole="PeriodCategoryTotal" ToRole="PeriodBudgetVsActual" />
+        </EntityType>
+        <Association Name="PeriodBudgetVsActualPeriodCategoryTotal">
+          <End Type="BullshitTrackerModel.PeriodBudgetVsActual" Role="PeriodBudgetVsActual" Multiplicity="1" />
+          <End Type="BullshitTrackerModel.PeriodCategoryTotal" Role="PeriodCategoryTotal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PeriodBudgetVsActual">
+              <PropertyRef Name="PeriodId" />
+              <PropertyRef Name="BudgetId" />
+            </Principal>
+            <Dependent Role="PeriodCategoryTotal">
+              <PropertyRef Name="PeriodId" />
+              <PropertyRef Name="BudgetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1060,6 +1114,17 @@ warning 6002: The table/view 'trackarayazqumed.dbo.Transactions_All' does not ha
                 <ScalarProperty Name="BudgetedAmount" ColumnName="BudgetedAmount" />
                 <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PeriodCategoryTotals">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.PeriodCategoryTotal">
+              <MappingFragment StoreEntitySet="PeriodCategoryTotals">
+                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+                <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

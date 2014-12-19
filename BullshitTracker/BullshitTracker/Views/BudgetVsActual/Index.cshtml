@@ -18,12 +18,12 @@
         <col width="100" />
         <col width="100" />
         <col width="100" />
-        
+
     </colgroup>
     <tr>
 
         <th>
-            Budget  
+            Budget
         </th>
         <th style="text-align:right">
             Budget Amt.
@@ -37,44 +37,62 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+    @foreach (var item in Model) {
+        <tr>
 
-        <td>
-            @Html.ActionLink(item.BudgetName, "Index", "ExpenseDetails",  new { Budget = item.BudgetId , Period = item.PeriodId },null)
+            <td>
+                @Html.ActionLink(item.BudgetName, "Index", "ExpenseDetails",  new { Budget = item.BudgetId , Period = item.PeriodId },null)
 
-        </td>
-        <td style="text-align:right">
+            </td>
+            <td style="text-align:right">
 
-            @Html.DisplayFor(modelItem => item.BudgetedAmount)
-        </td>
-        <td style="text-align:right; font-weight:bold">
+                @Html.DisplayFor(modelItem => item.BudgetedAmount)
+            </td>
+            <td style="text-align:right; font-weight:bold">
 
-            @Html.DisplayFor(modelItem => item.ActualAmount)
-        </td>
-        <td style="text-align:right">
-            @Html.DisplayFor(modelItem => item.PercentOfBudget)%
-        </td>
+                @Html.DisplayFor(modelItem => item.ActualAmount)
+            </td>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.PercentOfBudget)%
+            </td>
 
-    </tr>
-}
+        </tr>
 
-    <tr style="font-weight:bold; font-size:larger">
-        <td>
-            Total
-        </td>
-        <td style="text-align:right">
 
-            @ViewBag.PeriodBudgeted
-        </td>
-        <td style="text-align:right; font-weight:bold">
+        foreach (var item2 in item.PeriodCategoryTotals) {
+            <tr>
 
-            @ViewBag.PeriodTotalActual
-        </td>
-        <td style="text-align:right">
-            @ViewBag.PercentOfBudget %
-        </td>
+                <td>
+                    -> @Html.ActionLink(item2.CategoryName, "Index", "ExpenseDetails", new { Budget = item2.BudgetId, Period = item2.PeriodId, Category = item2.CategoryId }, null)
+ </td>    
+                <td style="text-align:right">
+                    @Html.DisplayFor(modelItem => item2.ActualAmount)
 
-    </tr>
 
-</table>
+                    </td>
+                </tr>
+
+                    }
+
+
+                    }
+
+            <tr style="font-weight:bold; font-size:larger">
+                <td>
+                    Total
+                </td>
+                <td style="text-align:right">
+
+                    @ViewBag.PeriodBudgeted
+                </td>
+                <td style="text-align:right; font-weight:bold">
+
+                    @ViewBag.PeriodTotalActual
+                </td>
+                <td style="text-align:right">
+                    @ViewBag.PercentOfBudget %
+                </td>
+
+            </tr>
+
+        </table>

@@ -36,7 +36,9 @@
         <EntityTypeShape EntityType="BullshitTrackerModel.Transactions_All" Width="1.5" PointX="13.25" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="BullshitTrackerModel.TransactionTransactions_All" />
         <AssociationConnector Association="BullshitTrackerModel.BudgetTransactions_All" />
-        <EntityTypeShape EntityType="BullshitTrackerModel.PeriodBudgetVsActualSummary" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.PeriodBudgetVsActualSummary" Width="2.375" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.PeriodCategoryTotal" Width="1.5" PointX="6.5" PointY="13" />
+        <AssociationConnector Association="BullshitTrackerModel.PeriodBudgetVsActualPeriodCategoryTotal" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

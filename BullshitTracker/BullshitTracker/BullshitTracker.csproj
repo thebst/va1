@@ -236,6 +236,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PeriodCategoryTotalP.cs" />
     <Compile Include="Models\ExceptionTransaction.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
@@ -251,6 +252,9 @@
     </Compile>
     <Compile Include="Models\PeriodBudgetVsActualP.cs" />
     <Compile Include="Models\PeriodBudgetVsActualSummary.cs">
+      <DependentUpon>BullshitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PeriodCategoryTotal.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PurchasesByCategory.cs">

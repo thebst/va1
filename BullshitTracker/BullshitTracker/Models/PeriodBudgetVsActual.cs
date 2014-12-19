@@ -14,6 +14,11 @@ namespace BullshitTracker.Models
     
     public partial class PeriodBudgetVsActual
     {
+        public PeriodBudgetVsActual()
+        {
+            this.PeriodCategoryTotals = new HashSet<PeriodCategoryTotal>();
+        }
+    
         public int Id { get; set; }
         public int PeriodId { get; set; }
         public string PeriodName { get; set; }
@@ -26,5 +31,7 @@ namespace BullshitTracker.Models
         public Nullable<double> PercentOfBudget { get; set; }
         public Nullable<int> Month { get; set; }
         public Nullable<int> Year { get; set; }
+    
+        public virtual ICollection<PeriodCategoryTotal> PeriodCategoryTotals { get; set; }
     }
 }
