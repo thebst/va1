@@ -14,17 +14,19 @@
 
 <table class="table">
     <colgroup>
-        <col width="130" />
+        <col width="80" />
+        <col width="200" />
         <col width="100" />
         <col width="100" />
         <col width="100" />
 
     </colgroup>
-    <tr>
+    <tr style="font-size:larger">
 
-        <th>
+        <th colspan="2">
             Budget
         </th>
+
         <th style="text-align:right">
             Budget Amt.
         </th>
@@ -38,12 +40,15 @@
     </tr>
 
     @foreach (var item in Model) {
-        <tr>
+        <tr style="background-color:azure; font-size:larger">
 
-            <td>
-                @Html.ActionLink(item.BudgetName, "Index", "ExpenseDetails",  new { Budget = item.BudgetId , Period = item.PeriodId },null)
+            <td colspan="2">
+
+                    @Html.ActionLink(item.BudgetName, "Index", "ExpenseDetails", new { Budget = item.BudgetId, Period = item.PeriodId }, null)
+
 
             </td>
+            
             <td style="text-align:right">
 
                 @Html.DisplayFor(modelItem => item.BudgetedAmount)
@@ -61,15 +66,19 @@
 
         foreach (var item2 in item.PeriodCategoryTotals) {
             <tr>
-
+                <td></td>
+                
                 <td>
-                    -> @Html.ActionLink(item2.CategoryName, "Index", "ExpenseDetails", new { Budget = item2.BudgetId, Period = item2.PeriodId, Category = item2.CategoryId }, null)
+                    @Html.ActionLink(item2.CategoryName, "Index", "ExpenseDetails", new { Budget = item2.BudgetId, Period = item2.PeriodId, Category = item2.CategoryId }, null)
  </td>    
+                <td></td>
+
                 <td style="text-align:right">
                     @Html.DisplayFor(modelItem => item2.ActualAmount)
 
 
                     </td>
+                <td style="text-align:right">tbd</td>
                 </tr>
 
                     }
@@ -81,6 +90,7 @@
                 <td>
                     Total
                 </td>
+                <td></td>
                 <td style="text-align:right">
 
                     @ViewBag.PeriodBudgeted
