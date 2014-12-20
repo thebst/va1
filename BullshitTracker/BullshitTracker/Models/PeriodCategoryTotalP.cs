@@ -21,6 +21,11 @@ namespace BullshitTracker.Models
         public string CategoryName { get; set; }
         [DisplayFormat(DataFormatString = "{0:#,##0.00}")]
         public double ActualAmount { get; set; }
+        [DisplayFormat(DataFormatString = "{0:#,##0.00}")]
+        public double BudgetAmount { get; set; }
+        [DisplayFormat(DataFormatString = "{0:#,0}")]
+        public double PercentOfBudget {get;set;}
+
 
         public virtual PeriodBudgetVsActual PeriodBudgetVsActual { get; set; }
     }

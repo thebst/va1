@@ -110,8 +110,10 @@
 warning 6002: The table/view 'TrackerDB.dbo.PeriodBudgetVsActual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PeriodBudgetVsActual">
           <Key>
+            
             <PropertyRef Name="PeriodId" />
             <PropertyRef Name="BudgetId" />
+            
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="PeriodId" Type="int" Nullable="false" />
@@ -143,6 +145,7 @@ warning 6002: The table/view 'TrackerDB.dbo.PeriodCategoryTotals' does not have 
           <Key>
             <PropertyRef Name="BudgetId" />
             <PropertyRef Name="PeriodId" />
+            
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="BudgetId" Type="int" Nullable="false" />
@@ -150,6 +153,8 @@ warning 6002: The table/view 'TrackerDB.dbo.PeriodCategoryTotals' does not have 
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="CategoryName" Type="varchar" MaxLength="50" />
           <Property Name="ActualAmount" Type="float" Nullable="false" />
+          <Property Name="BudgetAmount" Type="money" />
+          <Property Name="PercentOfBudget" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'TrackerDB.dbo.PurchasesByCategory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -371,7 +376,9 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
     [PeriodCategoryTotals].[PeriodId] AS [PeriodId], 
     [PeriodCategoryTotals].[CategoryId] AS [CategoryId], 
     [PeriodCategoryTotals].[CategoryName] AS [CategoryName], 
-    [PeriodCategoryTotals].[ActualAmount] AS [ActualAmount]
+    [PeriodCategoryTotals].[ActualAmount] AS [ActualAmount], 
+    [PeriodCategoryTotals].[BudgetAmount] AS [BudgetAmount], 
+    [PeriodCategoryTotals].[PercentOfBudget] AS [PercentOfBudget]
     FROM [dbo].[PeriodCategoryTotals] AS [PeriodCategoryTotals]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PurchasesByCategory" EntityType="Self.PurchasesByCategory" store:Type="Views" store:Schema="dbo">
@@ -929,6 +936,8 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
           <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ActualAmount" Type="Double" Nullable="false" />
           <NavigationProperty Name="PeriodBudgetVsActual" Relationship="BullshitTrackerModel.PeriodBudgetVsActualPeriodCategoryTotal" FromRole="PeriodCategoryTotal" ToRole="PeriodBudgetVsActual" />
+          <Property Name="BudgetAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PercentOfBudget" Type="Double" />
         </EntityType>
         <Association Name="PeriodBudgetVsActualPeriodCategoryTotal">
           <End Type="BullshitTrackerModel.PeriodBudgetVsActual" Role="PeriodBudgetVsActual" Multiplicity="1" />
@@ -1120,6 +1129,8 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
           <EntitySetMapping Name="PeriodCategoryTotals">
             <EntityTypeMapping TypeName="BullshitTrackerModel.PeriodCategoryTotal">
               <MappingFragment StoreEntitySet="PeriodCategoryTotals">
+                <ScalarProperty Name="PercentOfBudget" ColumnName="PercentOfBudget" />
+                <ScalarProperty Name="BudgetAmount" ColumnName="BudgetAmount" />
                 <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />

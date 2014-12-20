@@ -71,14 +71,17 @@
                 <td>
                     @Html.ActionLink(item2.CategoryName, "Index", "ExpenseDetails", new { Budget = item2.BudgetId, Period = item2.PeriodId, Category = item2.CategoryId }, null)
  </td>    
-                <td></td>
+                
+                <td style="text-align:right">@Html.DisplayFor(modelItem => item2.BudgetAmount)</td>
 
                 <td style="text-align:right">
                     @Html.DisplayFor(modelItem => item2.ActualAmount)
 
 
                     </td>
-                <td style="text-align:right">tbd</td>
+                <td style="text-align:right">
+                    @Html.DisplayFor(modelitem=>item2.PercentOfBudget)%
+                </td>
                 </tr>
 
                     }
