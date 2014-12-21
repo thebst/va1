@@ -1,0 +1,11 @@
+﻿@model IEnumerable<BullshitTracker.Models.Period>
+
+
+
+@foreach (var item in Model)
+{
+    
+
+    <li>@Html.ActionLink(item.Name, "Index", "BudgetVsActual", new { periodId = @item.Id }, null)</li>
+}
+

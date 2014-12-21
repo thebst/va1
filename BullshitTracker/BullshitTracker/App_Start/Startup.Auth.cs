@@ -32,7 +32,7 @@ namespace BullshitTracker
             //   appId: "",
             //   appSecret: "");
 
-            app.UseGoogleAuthentication();
+            //app.UseGoogleAuthentication();
         }
     }
 }

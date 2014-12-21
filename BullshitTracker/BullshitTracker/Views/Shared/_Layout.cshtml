@@ -35,12 +35,7 @@
                             <li>
                             <li>@Html.ActionLink("Previous Month", "Index", "BudgetVsActual",null , null)</li>
                             <li class="divider"></li>
-                            <li>@Html.ActionLink("November", "Index", "BudgetVsActual", new { periodId = 11 }, null)</li>
-                            <li>@Html.ActionLink("December", "Index", "BudgetVsActual", new { periodId = 12 }, null)</li>
-                            <li>@Html.ActionLink("January", "Index", "BudgetVsActual", new { periodId = 13 }, null)</li>
-                            <li>@Html.ActionLink("February", "Index", "BudgetVsActual", new { periodId = 14 }, null)</li>
-                            <li>@Html.ActionLink("March", "Index", "BudgetVsActual", new { periodId = 15 }, null)</li>
-                            <li>@Html.ActionLink("April", "Index", "BudgetVsActual", new { periodId = 16 }, null)</li>
+                            @Html.Action("PeriodMenu","Periods")
                         </ul>
                         
                     </li>
