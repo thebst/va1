@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace BullshitTracker.Controllers
 {
-    [Authorize(Users = @"MarkDeganiLocalhost, MarkDegani, RebeccaDegani, mdegani")]
+    [Authorize(Roles = @"Planner")]
     public class HomeController : Controller
     {
         public ActionResult Index()
