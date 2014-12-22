@@ -10,7 +10,7 @@ using BullshitTracker.Models;
 
 namespace BullshitTracker.Controllers
 {
-    [Authorize(Users = @"MarkDeganiLocalhost, MarkDegani, mdegani")]
+       [Authorize(Roles = @"Planner")]
     public class CashWithdrawlsController : Controller
     {
         private BullshitTrackerEntities db = new BullshitTrackerEntities();

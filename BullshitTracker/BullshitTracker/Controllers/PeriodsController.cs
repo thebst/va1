@@ -10,6 +10,7 @@ using BullshitTracker.Models;
 
 namespace BullshitTracker.Controllers
 {
+    [Authorize(Roles = @"Planner")]
     public class PeriodsController : Controller
     {
         private BullshitTrackerEntities db = new BullshitTrackerEntities();
