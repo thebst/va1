@@ -23,7 +23,7 @@ namespace BullshitTracker.Controllers
             if (periodId == null)
             {
 
-                periodId = db.Periods.Where(n => n.EndDate >= DateTime.Now && n.StartDate <= DateTime.Now).SingleOrDefault().Id-1;
+                periodId = db.Periods.Where(n => n.EndDate >= DateTime.Now && n.StartDate <= DateTime.Now).SingleOrDefault().Id;
             };
 
             ViewBag.PeriodName = db.Periods.Find(periodId).Name.ToString();

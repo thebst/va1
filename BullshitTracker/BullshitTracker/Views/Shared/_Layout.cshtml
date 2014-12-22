@@ -26,27 +26,22 @@
                 
                 </a>
 
-                 @Html.ActionLink("BS-Trk-A-ROO", "Index", "Home", null, new { @class = "navbar-brand" })
+                 @Html.ActionLink("NIANIA", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Transactions", "Index", "Transactions")</li>
-                    <li>@Html.ActionLink("Exceptions", "Index", "ExeptionTransaction")</li>
-                    <li>@Html.ActionLink("Merchants", "Index", "Merchants")</li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Budget vs Actual<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Summary (placeholder)</a></li>
-                            <li class="divider"></li>
-                            <li>
-                            <li>@Html.ActionLink("Previous Month", "Index", "BudgetVsActual",null , null)</li>
-                            <li class="divider"></li>
 
-@if (Request.IsAuthenticated && User.IsInRole("Planner"))
-{
-                            @Html.Action("PeriodMenu","Periods")
-}
+                    <li>@Html.ActionLink("Transactions", "Index", "Transactions")</li>
+                    <li>@Html.ActionLink("Budget vs Actual", "Index", "BudgetVsActual", null, null)</li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Stuff<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Merchants", "Index", "Merchants")</li>
+                            
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Exceptions", "Index", "ExeptionTransaction")</li>
+                      
                            </ul>
                         
                     </li>
