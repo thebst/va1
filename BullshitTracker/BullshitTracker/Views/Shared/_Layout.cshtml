@@ -35,8 +35,12 @@
                             <li>
                             <li>@Html.ActionLink("Previous Month", "Index", "BudgetVsActual",null , null)</li>
                             <li class="divider"></li>
+
+@if (Request.IsAuthenticated && User.IsInRole("Planner"))
+{
                             @Html.Action("PeriodMenu","Periods")
-                        </ul>
+}
+                           </ul>
                         
                     </li>
                 </ul>
