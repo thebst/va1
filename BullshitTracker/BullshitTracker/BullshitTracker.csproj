@@ -198,6 +198,7 @@
     <Compile Include="Controllers\ExpenseDetailsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MerchantsController.cs" />
+    <Compile Include="Controllers\MonthlyCategoryBudgetsController.cs" />
     <Compile Include="Controllers\PeriodsController.cs" />
     <Compile Include="Controllers\PurchasesByCategoryController.cs" />
     <Compile Include="Controllers\TaxRatesController.cs" />
@@ -493,6 +494,11 @@
     <Content Include="Views\Periods\Edit.cshtml" />
     <Content Include="Views\Periods\Index.cshtml" />
     <Content Include="Views\Periods\PeriodMenu.cshtml" />
+    <Content Include="Views\MonthlyCategoryBudgets\Create.cshtml" />
+    <Content Include="Views\MonthlyCategoryBudgets\Delete.cshtml" />
+    <Content Include="Views\MonthlyCategoryBudgets\Details.cshtml" />
+    <Content Include="Views\MonthlyCategoryBudgets\Edit.cshtml" />
+    <Content Include="Views\MonthlyCategoryBudgets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
