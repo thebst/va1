@@ -17,6 +17,7 @@ namespace BullshitTracker.Models
         public Period()
         {
             this.MonthlyBudgets = new HashSet<MonthlyBudget>();
+            this.MonthlyCategoryBudgets = new HashSet<MonthlyCategoryBudget>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,6 @@ namespace BullshitTracker.Models
         public Nullable<int> Year { get; set; }
     
         public virtual ICollection<MonthlyBudget> MonthlyBudgets { get; set; }
+        public virtual ICollection<MonthlyCategoryBudget> MonthlyCategoryBudgets { get; set; }
     }
 }

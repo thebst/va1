@@ -236,12 +236,13 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PeriodCategoryTotalP.cs" />
     <Compile Include="Models\ExceptionTransaction.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MonthlyBudget.cs">
+      <DependentUpon>BullshitModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MonthlyCategoryBudget.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Period.cs">
@@ -250,13 +251,15 @@
     <Compile Include="Models\PeriodBudgetVsActual.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PeriodBudgetVsActualP.cs" />
     <Compile Include="Models\PeriodBudgetVsActualSummary.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PeriodCategoryTotal.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PeriodCategoryTotalP.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\PeriodBudgetVsActualP.cs" />
     <Compile Include="Models\PurchasesByCategory.cs">
       <DependentUpon>BullshitModel.tt</DependentUpon>
     </Compile>

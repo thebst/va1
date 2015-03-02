@@ -67,6 +67,15 @@
           <Property Name="Budget" Type="int" />
           <Property Name="Amount" Type="money" />
         </EntityType>
+        <EntityType Name="MonthlyCategoryBudget">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Period" Type="int" />
+          <Property Name="Category" Type="int" />
+          <Property Name="Amount" Type="money" />
+        </EntityType>
         <EntityType Name="Periods">
           <Key>
             <PropertyRef Name="Id" />
@@ -342,6 +351,7 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExceptionTransactions" EntityType="Self.ExceptionTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyBudget" EntityType="Self.MonthlyBudget" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MonthlyCategoryBudget" EntityType="Self.MonthlyCategoryBudget" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Periods" EntityType="Self.Periods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaxRates" EntityType="Self.TaxRates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
@@ -480,6 +490,7 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
           <NavigationProperty Name="PurchasesByCategories" Relationship="BullshitTrackerModel.CategoryPurchasesByCategory" FromRole="Category" ToRole="PurchasesByCategory" />
           <Property Name="Budget" Type="Int32" />
           <NavigationProperty Name="Budget1" Relationship="BullshitTrackerModel.FK_Categories_Budgets" FromRole="Category" ToRole="Budget" />
+          <NavigationProperty Name="MonthlyCategoryBudgets" Relationship="BullshitTrackerModel.CategoryMonthlyCategoryBudget" FromRole="Category" ToRole="MonthlyCategoryBudget" />
         </EntityType>
         <EntityType Name="ExceptionTransaction">
           <Key>
@@ -669,6 +680,15 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
             <End Role="PeriodBudgetVsActual" EntitySet="PeriodBudgetVsActuals" />
             <End Role="PeriodCategoryTotal" EntitySet="PeriodCategoryTotals" />
           </AssociationSet>
+          <EntitySet Name="MonthlyCategoryBudgets" EntityType="BullshitTrackerModel.MonthlyCategoryBudget" />
+          <AssociationSet Name="CategoryMonthlyCategoryBudget" Association="BullshitTrackerModel.CategoryMonthlyCategoryBudget">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="MonthlyCategoryBudget" EntitySet="MonthlyCategoryBudgets" />
+          </AssociationSet>
+          <AssociationSet Name="PeriodMonthlyCategoryBudget" Association="BullshitTrackerModel.PeriodMonthlyCategoryBudget">
+            <End Role="Period" EntitySet="Periods" />
+            <End Role="MonthlyCategoryBudget" EntitySet="MonthlyCategoryBudgets" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PurchasesByCategory">
           <Key>
@@ -738,6 +758,7 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
           <Property Name="Month" Type="Int32" />
           <Property Name="Year" Type="Int32" />
           <NavigationProperty Name="MonthlyBudgets" Relationship="BullshitTrackerModel.FK_MonthlyBudget_Periods" FromRole="Period" ToRole="MonthlyBudget" />
+          <NavigationProperty Name="MonthlyCategoryBudgets" Relationship="BullshitTrackerModel.PeriodMonthlyCategoryBudget" FromRole="Period" ToRole="MonthlyCategoryBudget" />
         </EntityType>
         <Association Name="FK_Categories_Budgets">
           <End Type="BullshitTrackerModel.Budget" Role="Budget" Multiplicity="0..1" />
@@ -953,6 +974,41 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="MonthlyCategoryBudget">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Period" Type="Int32" />
+          <Property Name="Category" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Category1" Relationship="BullshitTrackerModel.CategoryMonthlyCategoryBudget" FromRole="MonthlyCategoryBudget" ToRole="Category" />
+          <NavigationProperty Name="Period1" Relationship="BullshitTrackerModel.PeriodMonthlyCategoryBudget" FromRole="MonthlyCategoryBudget" ToRole="Period" />
+        </EntityType>
+        <Association Name="CategoryMonthlyCategoryBudget">
+          <End Type="BullshitTrackerModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="BullshitTrackerModel.MonthlyCategoryBudget" Role="MonthlyCategoryBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyCategoryBudget">
+              <PropertyRef Name="Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PeriodMonthlyCategoryBudget">
+          <End Type="BullshitTrackerModel.Period" Role="Period" Multiplicity="0..1" />
+          <End Type="BullshitTrackerModel.MonthlyCategoryBudget" Role="MonthlyCategoryBudget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MonthlyCategoryBudget">
+              <PropertyRef Name="Period" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1136,6 +1192,16 @@ warning 6002: The table/view 'TrackerDB.dbo.Transactions_All' does not have a pr
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
                 <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MonthlyCategoryBudgets">
+            <EntityTypeMapping TypeName="BullshitTrackerModel.MonthlyCategoryBudget">
+              <MappingFragment StoreEntitySet="MonthlyCategoryBudget">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

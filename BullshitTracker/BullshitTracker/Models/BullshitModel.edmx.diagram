@@ -39,6 +39,9 @@
         <EntityTypeShape EntityType="BullshitTrackerModel.PeriodBudgetVsActualSummary" Width="2.375" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="BullshitTrackerModel.PeriodCategoryTotal" Width="2.375" PointX="6.5" PointY="13" />
         <AssociationConnector Association="BullshitTrackerModel.PeriodBudgetVsActualPeriodCategoryTotal" />
+        <EntityTypeShape EntityType="BullshitTrackerModel.MonthlyCategoryBudget" Width="2.25" PointX="8.125" PointY="2.75" />
+        <AssociationConnector Association="BullshitTrackerModel.CategoryMonthlyCategoryBudget" />
+        <AssociationConnector Association="BullshitTrackerModel.PeriodMonthlyCategoryBudget" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
